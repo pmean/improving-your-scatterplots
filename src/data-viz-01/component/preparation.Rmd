@@ -1,0 +1,220 @@
+---
+title: "Scatterplots, Preparation"
+author: "Steve Simon"
+output: powerpoint_presentation
+date: "Created 2019-08-16"
+---
+
+```{r child="../../common-files/src/component-header.Rmd"}
+```
+
+### Preparation, DASL https://dasl.datadescription.com/
+
+![Main page of DASL website](../images/external/dasl-main-page.png)
+
+<div class="notes">
+
+DASL is an acronym for Data And Story Library. It used to sit on a website, Statlib, at Carnegie Mellon, but the company, Data Description, which makes a data analysis program, DataDesk, took over when the Statlib site went dark. It's a very nice site for small data sets useful for teaching.
+
+I want to use a file on housing prices in Saratoga, New York, and you can find it through the search function on the main page. Look for housing or Saratoga, and you'll find it pretty quickly.
+
+</div>
+
+### Preparation, Saratoga House Prices
+
+![Description of the Saratoga house prices dataset](../images/external/dasl-saratoga-house-prices.png)
+  
+<div class="notes">
+  
+There are two files actually, that look very similar. You want the "Saratoga House Prices" file and not the one called "Saratoga Houses". The Saratoga House Prices file has 1063 records and the variables are Price, Living.Area, Bathrooms, Bedrooms, Fireplaces, Lot.Size, Age, Fireplace.
+
+This is the file that you want to download and run a scatterplot.
+
+Actually, you can just use the CSV file that I thoughtfully provide.
+
+</div>
+
+### Preparation, Advice if things don't work
++ Download the file
++ Tweak the file
+  + Remove variable names in first line
+  + Change missing value codes
+  + Change the delimiter
+  + Look for inconsistencies
+  + Convert the format
+  
+<div class="notes">
+
+These things never work right the first time. If computers worked the first time and every time, we'd all be getting paid the minimum wage. I'm glad to help if you have any problems importing this or any other files, but here is some general advice that you might want to try first.
+
+Some software systems allow you to download directly from the web. This is fast and easy and convenient, but if it doesn't work download the file and see if you can import it directly. 
+
+If this doesn't work, open the file in a text editing program like notepad and see if you can make some minor changes that allow you to import the file.
+
+If the first line of code has variable names, see if you can import the file without the variable names.
+
+Look at the code for missing values. Some systems use a single dot for a missing value, and others use the letters "NA". Sometimes converting the missing value code to a different code will help.
+
+Most files have a delimiter, a character that separates one variable from the next. This could be a space, a comma, or a tab character. You may have better luck if you do a careful search and replace, changing from one delimiter to another.
+
+Look for inconsistencies, such as some invalid lines at the bottom of the file or a line with one too few variables or an unmatched quote mark. Fix these and try again.
+
+See if you can read the file into a different program like a spreadsheet and export it in a different format.
+
+</div>
+
+### Preparation, Python code
+
+```
+import pandas as pd
+import altair as alt
+df = pd.read_csv("data/houses.csv")
+ch = alt.Chart(df).mark_point().encode(
+    x='Age',
+    y='Price'
+)
+ch.save("/images/python-scatterplot.html")
+```
+
+```{python, echo=FALSE}
+import pandas as pd
+import altair as alt
+df = pd.read_csv("../../common-files/data/houses.csv")
+ch = alt.Chart(df).mark_point().encode(
+    x='Age',
+    y='Price'
+)
+ch.save("../images/python/basic-scatterplot.html")
+```
+
+<div class="notes">
+
+Here is the Python code that will download the data and create a simple scatterplot. You may need to adapt the names of the files or the directories where they are stored.
+
+</div>
+
+### Preparation, Python output
+
+![Basic scatterplot using Python](../images/python/basic-scatterplot.png)
+
+<div class="notes">
+
+See if you can get a graph that looks something like this. If your graph uses different colors, scaling, etc. don't worry. I just want to know at this point that you can produce any sort of reasonable graph.
+
+</div>
+
+### Preparation, R code
+
+Here is the R code that will download the data and create a simple scatterplot.
+
+```{}
+library(ggplot2)
+saratoga_houses <- read.csv("data/houses.csv")
+ggplot(saratoga_houses, aes(x=Age, y=Price)) +
+  geom_point()
+```
+
+<div class="notes">
+
+Here's a brief bit of R code that should work. You may need to adapt the names of the files or the directories where they are stored.
+
+</div>
+
+### Preparation, R output
+
+```{r simple-scatterplot}
+load("../../common-files/data/houses.RData")
+initiate_image()
+ggplot(saratoga_houses, aes(x=Age, y=Price)) +
+  geom_point()
+finalize_image()
+```
+
+`r display_image`
+
+<div class="notes">
+
+Again, see if you can get a graph that looks something like this. If your graph uses different colors, scaling, etc. don't worry. I just want to know at this point that you can produce any sort of reasonable graph.
+
+</div>
+
+### Preparation, Tableau Open dialog box
+
+![Screenshot of Tableau software, main screen](../images/tableau/main-screen.png)
+
+<div class="notes">
+
+Before you start with Tableau, download the Saratoga Housing Prices file to your local computer.
+
+Tableau uses a graphical user interface, so there is no "program" to run. Here are the steps you need to take to get the data in and produce a simple scatterplot.
+
+This is what Tableau looks like when you open it up. It may appear slightly differently on your computer system.
+
+Select "Text file" from the left side menu bar or "File | Open" from the main menu.
+
+</div>
+
+### Preparation, Tableau, Select your file
+
+![Screenshot of Tableau software, file open dialog box](../images/tableau/file-open.png)
+
+<div class="notes">
+
+Find the proper location on your computer where you stored the downloaded file and open it.
+
+</div>
+
+### Preparation, Tabelau data preview
+
+![Screenshot of Tableau software with data imported](../images/tableau/with-saratoga.png)
+
+<div class="notes">
+
+Your screen should look something like this if you imported the data correctly. Click on the sheet1 tab in the lower left corner to open up a blank visualization page.
+
+</div>
+
+### Preparation, Tableau, start visualization
+
+![Screenshot of Tableau software, blank visualization page](../images/tableau/empty-frame.png)
+
+<div class="notes">
+
+Tableau will try to classify your data as measures or dimensions and will also try to decide whether they are categorical (designated by blue pills) or continuous (designated by green pills). Don't worry too much about this now, other than to note that changing the designations that Tableau makes will change how you visualize things.
+
+Drag the variable Age into the Columns field and drag Price into the Rows field
+
+</div>
+
+### Preparation, Tableau, Identify columns and rows
+
+![Screenshot of Tableau software after initial drag and drop](../images/tableau/drag-and-drop.png)
+
+<div class="notes">
+
+Tableau makes some educated guesses about what you want. It thinks that you are interested in aggregating age and price and plots a single data point with the sum of all the ages of the houses on the X axis and the sum of all the prices on the Y axis.
+
+This is not what you want, but that's okay. Better a wrong guess that you can correct than no guess at all.
+
+</div>
+
+### Preparation, Tableau, change columns
+
+![Screenshot of Tableau software changing from measure to dimension](../images/tableau/change-to-dimension.png)
+
+<div class="notes">
+
+Click on the green Sum(Age) and change it from Measure(Sum) to Dimension. Don't freak out when the graph goes all bonkers on you. Click on the green Sum(Price) and do the same thing. Then you'll get a nice basic scatterplot.
+
+</div>
+
+### Preparation, Tableau output
+
+![Screenshot of Tableau software changing from measure to dimension](../images/tableau/basic-scatterplot.png)
+
+<div class="notes">
+
+Did you get something that looks roughly like this? Pat yourself on the back for a job well done.
+
+</div>
+

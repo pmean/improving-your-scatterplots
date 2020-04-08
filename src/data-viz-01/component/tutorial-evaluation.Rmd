@@ -1,0 +1,264 @@
+---
+title: "Tutorial, Evaluating visualizations"
+author: "Steve Simon"
+output: powerpoint_presentation
+date: "Created 2019-08-22"
+---
+
+```{r child="../../common-files/src/component-header.Rmd"}
+```
+
+### Evaluation, Which is better? A bar chart...
+
+```{r bar-chart-1}
+labs <- c("Divorced/Separated", "Married", "Single/Never married", "Widowed")
+marital_status <- data.frame(
+  class=labs,
+  n=c(49, 124, 55, 22),
+  prop=c(19.6, 49.6, 22.0, 8.8)
+)
+initiate_image()
+ggplot(marital_status, aes(x=class, y=n, fill=class)) +
+  geom_col(fill=c("#F8766D", "#7CAE00", "#00BFC4", "#C77CFF")) -> bar_chart1
+plot(bar_chart1)
+finalize_image("Bar chart, with four bars side by side")
+```
+
+`r display_image`
+
+<div class="notes">
+
+Here's a bar chart dispaying the counts for people in four categories for marital status, divorced, married, single, widowed.
+
+</div>
+
+### Evaluation, ... a stacked bar chart, ...
+
+```{r bar-chart-2}
+initiate_image()
+ggplot(marital_status, aes(x="", y=n, fill=class)) +
+  geom_col() -> bar_chart2
+plot(bar_chart2)
+finalize_image("")
+```
+
+`r display_image`
+
+<div class="notes">
+
+Here's the same data, but the bars are now stacked in a single column.
+
+</div>
+
+
+### Evaluation, ... or a pie chart
+
+```{r pie-chart-1}
+initiate_image()
+ggplot(marital_status, aes(x = "", y = n, fill = class)) +
+  geom_col() +
+  coord_polar("y", start = 0) +
+  theme_void() -> pie_chart
+plot(pie_chart)
+finalize_image("Pie chart")
+```
+
+`r display_image`
+
+<div class="notes">
+
+There's one more obvious choice. You can display the counts in a pie chart.
+
+</div>
+
+
+### Evaluation, Better in what way?
++ Two most important criteria
+  + Speed
+  + Accuracy
+  
+<div class="notes">
+
+The answer really depends on what question you are asking. There are a variety of questions that you might ask.
+
+You can run an experiment (people have done this) where you randomize and show half of them a bar chart and half of them a pie chart. Then you ask a question. Then you note the speed and accuracy of the response. Depending on the question, sometimes pie charts give faster and more accurate answers. Sometimes bar charts give faster and more accurate answers. It turns out that the results match up nicely with what we know about the psychology of perception.
+
+</div>
+
+### Evaluation, Which percentage is larger? Bar chart is best!
+
+```{r bar-chart-3}
+initiate_image()
+bar_chart1 +
+  geom_segment(
+    x=1.5, y=49, xend=2.5, yend=49, 
+    color="darkred", size=2, 
+    arrow=arrow())
+finalize_image("Bar chart, projecting one bar to another")
+```
+
+`r display_image`
+
+<div class="notes">
+
+If you ask the question, which percentage is larger, the percentage for single or the percentage for divorced/separated, the bar chart is the winner, hands-down. The comparison involves a simple horizontal projection. You can do this quickly and accurately.
+
+</div>
+
+### Evaluation, Second best, stacked bar chart
+
+```{r bar-chart-4}
+initiate_image()
+bar_chart2 +
+  geom_segment(
+    x=1.3, xend=1.3, y=201, yend=250, 
+    size=2, color="darkred",
+    arrow=arrow(ends="both")) +
+  geom_segment(
+    x=1.3, xend=1.3, y=22, yend=77, 
+    size=2, color="darkred",
+    arrow=arrow(ends="both"))
+finalize_image("Stacked bar chart, comparing lengths")
+```
+
+`r display_image`
+
+<div class="notes">
+
+The second best choice for answering this question is the stacked bar chart. You have to compare the lengths of two bars which are not aligned. It takes a bit longer to make this judgement, and it is harder to provide an accurate answer when the bars are very similar in length. But it is still not too difficult.
+
+</div>
+
+### Evaluation, Worst, pie chart
+
+```{r pie-chart-2}
+initiate_image()
+pie_chart +
+  geom_segment(
+    x=1, xend=1, y=22, yend=77, 
+    size=2, color="darkred",
+    arrow=arrow(ends="both")) +
+  geom_segment(
+    x=1, xend=1, y=201, yend=250,
+    size=2, color="darkred",
+    arrow=arrow(ends="both"))
+finalize_image("Pie chart, comparing two angles")
+```
+
+`r display_image`
+
+<div class="notes">
+
+For the pie chart, you have to judge which wedge of the pie is bigger by looking at the area of the wedges, but actually most people make assessments in a pie chart by looking at the interior angle. You can see that the interior angle is bigger for the single group, but it is a harder judgement to make quickly and it is a harder judgement to make accurately.
+
+Now I need to note that this is not my opinion. It is a fact established by empirical study. The first bar chart, which allows you to make comparisons using relative position, produces faster and more accurate answers.
+
+</div>
+
+
+### Evaluation, What fraction of people are single? Best is pie chart
+
+```{r pie-chart-3}
+initiate_image()
+pie_chart +
+  geom_segment(
+    x=1, xend=1, y=22, yend=77,
+    size=2, color="darkred",
+    arrow=arrow(ends="both")) +
+  geom_text(
+    x=1.1, y=45, hjust=0,
+    label="~90 degrees", 
+    size=4, col="darkred"
+  )
+finalize_image("Pie chart, estimating a percentage for one wedge")
+```
+
+`r display_image`
+
+<div class="notes">
+
+But wait! If you ask a different question, what percentage of people in your sample are single, the pie chart does the best. The interior angle for the single wedge is just a bit under 90 degrees, and that tells you quickly, and fairly accurately, that the percentage is a bit under 25%.
+
+</div>
+
+### Evaluation, The stacked bar chart is second best
+
+```{r bar-chart-5}
+initiate_image()
+bar_chart2 +
+  geom_segment(
+    x=1.3, xend=1.3, y=22, yend=77, 
+    size=2, color="darkred",
+    arrow=arrow(ends="both"))
+finalize_image("Stacked bar chart, estimating percentage")
+```
+
+`r display_image`
+
+<div class="notes">
+
+You can ask the same question for the stacked bar chart, but it will take longer and be less accurate. It's easy to split a bar in half, but you will have much harder perceptual task to split it into quarters. So deciding whether that single bar is a bit less than 25% or a bit more than 25% can't be done as well.
+
+</div>
+
+### Evaluation, The side-by-side bar chart is hopeless.
+
+```{r bar-chart-6}
+initiate_image()
+bar_chart1 + 
+  geom_text(x=3, y=27, label="??", size=20, color="darkred")
+finalize_image("Bar chart, trying to assess percentage questions")
+```
+
+`r display_image`
+
+<div class="notes">
+
+Trying to answer a percentage question for a side by side bar chart is pretty much hopeless. What you have to do is visually stack the bars and then divide the bars into quarters. 
+
+When you ask percentage questions, all methods do pretty well for percentages near 0% and 100%. All methods also do  well for percentages around half, or 50%. The pie chart also does well for percentages close to 25% and 75%. It is easy visually to split a pie into four equal pieces. Just look for the 90 degree angles. The empirical research supports this. Speed and accuracy of percentage judgements are about the same for bar charts and pie charts, except around 25% and 75% where the pie chart is markedly superior.
+
+</div>
+
+### Evaluation, Maybe the "hopeless" bar chart isn't so hopeless
+
+```{r bar-chart-7}
+re_ordered_marital_status <- data.frame(
+  re_ordered_class=factor(c(3, 2, 1, 4), labels=labs[c(3, 2, 1, 4)]),
+  n=c(55, 124, 49, 22),
+  prop=c(19.6, 49.6, 22.0, 8.8)
+)
+initiate_image()
+ggplot(re_ordered_marital_status, aes(x=re_ordered_class, y=prop, fill=re_ordered_class)) +
+  geom_col(fill=c("#00BFC4", "#7CAE00", "#F8766D", "#C77CFF")) -> bar_chart3
+plot(bar_chart3)
+finalize_image("Bar chart, with bars re-ordered and a percentage value on the Y axis")
+```
+
+`r display_image`
+
+<div class="notes">
+
+Things are never totally hopeless, however. If your goal is to simplify the estimation of the percentage of your sample in the single/never married category, change your y axis from counts to percentages. Also, place the most important bar closest to the Y axis. Horizontal projections are easiest when the distances you have to project are very short.
+
+There's lots of other little things you can do. We'll talk a lot more about bars in the second part of this workshop.
+
+</div>
+
+### Evaluation, Summary
++ Judging effectiveness of a graph
+  + Speed
+  + Accuracy
++ Pie chart better for estimating percentages
++ Any graph can be improved
+
+<div class="notes">
+
+The way that you judge the effectiveness of a graph is by speed and accuracy. How quickly you answer a question about the graph, and how accurate your answer is.
+
+The bar chart is best for comparing one bar to another, but if you want to estimate the percentage of a whole, then a pie chart is better, particularly for percentages around 25% and 75%.
+
+Even a bad graph can often be improved with some minor changes.
+
+</div>
+

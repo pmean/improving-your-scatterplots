@@ -1,0 +1,90 @@
+---
+title: "Scatterplot exercise, change the color"
+author: "Steve Simon"
+output: powerpoint_presentation
+date: "Created: 2019-08-24"
+---
+
+```{r child="../../common-files/src/component-header.Rmd"}
+```
+
+### Exercise, change the color
++ Use the Saratoga housing data set.
++ Draw a plot of all of the data where
+  + X=Age,
+  + Y=Price,
+  + Color=Bathrooms.
+  
+<div class="notes">
+
+Revisit your scatterplot. Draw a plot with x representing the age of the house, y representing the price, and the color representing the number of bathrooms.
+
+</div>
+
+### Exercise, Python code
++ Here's the Python code.
+```
+ch = alt.Chart(df).mark_point().encode(
+    x="Age", 
+    y="Price", 
+    color="Baths")
+```
+
+<div class="notes">
+
+In Altair/Python, the variable associated with different colors goes inside the encode function.
+
+</div>
+
+### Exercise, Python output
+
+![Python scatterplot mapping bathrooms to color](../images/python/python-basic-exercise-color.png)
+
+<div class="notes">
+
+Notice that Altair/Python used a gradient of colors. This is a good choice.
+
+The darker colors, associated with a larger number of bathrooms cluster to the left. Newer houses tend to have more bathrooms.
+
+</div>
+
+### Exercise, R code
++ Here's the R code.
+```
+ggplot(saratoga_houses, aes(x=Age, y=Price)) + 
+  geom_point(aes(color=factor(Bathrooms)))
+```
+
+<div class="notes">
+
+The color variable is defined inside the aes function.
+
+</div>
+
+### Exercise, R output
+
+```{r bathroom-colors}
+load("../../common-files/data/houses.RData")
+initiate_image()
+ggplot(saratoga_houses, aes(x=Age, y=Price)) + 
+  geom_point(aes(color=factor(Bathrooms)))
+finalize_image("R scatterplot mapping bathrooms to color")
+```
+
+`r display_image`
+
+<div class="notes">
+
+I deliberately defined Baths as categorical with the factor function, and notice the use of discrete colors rather than a gradient.
+
+</div>
+
+### Exercise, Tableau output
+
+![Tableau scatterplot mapping Bathrooms to color](../images/tableau/basic-exercise-color.png)
+
+<div class="notes">
+
+I deliberately defined Baths as Dimension Categorical (blue pill) to show the contrast. Notice that the colors are discrete well separated values.
+
+</div>

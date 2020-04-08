@@ -1,0 +1,111 @@
+---
+title: "Download key files"
+author: "Steve Simon"
+date: "Created: 2019-08-19"
+output: html_document
+---
+
+This program will download key files and store the results as CSV files as well as RData files.
+
+cpi: This is a data file used mostly in data-viz-03.
+
+```{r read-cpi}
+library(readr)
+fn <- "https://dasl.datadescription.com/download/data/3138"
+cpi <- read_tsv(fn, col_types=cols())
+cpi$t <- 2007 + (1:132)/12
+cpi <- cpi[1:128, ]
+save(cpi, file="../data/cpi.RData")
+write.csv(cpi, file="../data/cpi.csv", row.names=FALSE)
+```
+
+saratoga_houses: This is used in data-viz-01 and data-viz-03.
+
+```{r read-houses}
+fn <- "https://dasl.datadescription.com/download/data/3275"
+saratoga_houses <- read.table(fn, header=TRUE, sep="\x09")
+save(saratoga_houses, file="../data/houses.RData")
+write.csv(saratoga_houses, file="../data/houses.csv", row.names=FALSE)
+```
+
+Titanic: This is used in data-viz-02. There are several different versions of this file floating around and I'm not sure which one this is originally from.
+
+```{r read-titanic}
+titanic <- read.csv(file="../data/titanic3.csv", as.is=TRUE)
+save(titanic, file="../data/titanic.RData")
+```
+
+Scotus: This is used in data-viz-02.
+
+```{r read-scotus, eval=FALSE}
+scotus_full <- read_csv("../data/opinions_since_1970.csv")
+```
+
+```{r clean-scotus, eval=FALSE}
+scotus_full %>% select(-c(7, 8, 14)) %>% data.frame -> scotus
+scotus$author_name <- 
+  sub("justice [[author]]ginsburg[[/author]]", 
+      "justice ginsburg", scotus$author_name, fixed=TRUE)
+scotus$author_name <- sub("justice black;", "justice black", scotus$author_name)
+scotus$author_name <- sub("justice bruger", "justice burger", scotus$author_name)
+scotus$author_name <- sub("justice connor", "justice o'connor", scotus$author_name)
+scotus$author_name <- sub("justice o2122", "justice o'connor", scotus$author_name)
+scotus$author_name <- sub("justice waite", "justice white", scotus$author_name)
+table(scotus$author_name, scotus$year_filed)
+```
+
+```{r save-scotus, eval=FALSE}
+scotus %>%
+  data.frame(stingsAsFactors=FALSE) %>%
+  filter(category != "per_curiam") %>%
+  select(-scdb_decision_direction) %>%
+  select(-scdb_votes_majority) %>%
+  select(-scdb_votes_minority) %>%
+  write.csv(file="../data/scotus_opinions.csv", row.names=FALSE)
+scotus %>%
+  data.frame(stingsAsFactors=FALSE) %>%
+  filter(category=="majority") %>%
+  select(-author_name) %>%
+  select(-category) %>%
+  select(-per_curiam) %>%
+  write.csv(file="../data/scotus_cases.csv", row.names=FALSE)
+opinions <- read.csv("../data/scotus_opinions.csv", stringsAsFactors=FALSE) 
+sc_cases <- read.csv("../data/scotus_cases.csv", stringsAsFactors=FALSE) 
+save(c("opinions", "sc_cases"). file="../data/scotus.RData")
+```
+
+The cpi food indexes are used in data-viz-03. They were downloaded from FRED.
+
+```{r read-fred}
+library(ggplot2)
+food_pets <- read.csv("../../common-files/data/cpi-pet-food.csv", as.is=TRUE)
+food_home <- read.csv("../../common-files/data/cpi-food-at-home.csv", as.is=TRUE)
+food_away <- read.csv("../../common-files/data/cpi-food-away-from-home.csv", as.is=TRUE)
+food_home <- food_home[food_home$DATE>=as.Date("2002-01-01"), ]
+food_away <- food_away[food_away$DATE>=as.Date("2002-01-01"), ]
+names(food_pets) <- c("date", "cpi")
+names(food_home) <- c("date", "cpi")
+names(food_away) <- c("date", "cpi")
+food_pets$cpi <- food_pets$cpi/food_pets$cpi[1]
+food_home$cpi <- food_home$cpi/food_home$cpi[1]
+food_away$cpi <- food_away$cpi/food_away$cpi[1]
+n <- dim(food_pets)[1]
+food_indx <- rbind(food_away, food_home, food_pets)
+food_indx$indx <- rep(c("away", "home", "pets"), each=n)
+ggplot(food_indx, aes(date, cpi)) + geom_point()
+ggplot(food_home, aes(date, cpi)) + geom_point()
+ggplot(food_away, aes(date, cpi)) + geom_point()
+```
+
+The sleep data set is used in several advanced exercises
+
+```{r read-sleep}
+sleep <- read.table(
+  file="http://www.statsci.org/data/general/sleep.txt",
+  header=TRUE,
+  sep='\t',
+  as.is=TRUE)
+head(sleep)
+write.csv(sleep, file="../data/sleep.csv", row.names=FALSE)
+save(sleep, file="../data/sleep.RData")
+```

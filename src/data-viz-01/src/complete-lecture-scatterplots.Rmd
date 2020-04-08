@@ -1,0 +1,60 @@
+---
+title: "Data visualization, scatterplots"
+author: "Steve Simon"
+output: powerpoint_presentation
+date: "Created 2019-08-16"
+
+---                                                                                                                
+
+```{r echo=FALSE}
+source("../../common-files/src/setup.R")
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r options}
+redraw_graphs <- FALSE
+```
+
+```{r child="../component/introduction.Rmd"}
+```
+
+```{r child="../component/preparation.Rmd"}
+```
+
+```{r child="../component/newspaper-graphs.Rmd"}
+```
+
+```{r child="../../common-files/src/exercise-message.Rmd"}
+```
+
+```{r child="../component/tutorial-evaluation.Rmd"}
+```
+
+```{r child="../component/tutorial-grammar.Rmd"}
+```
+
+```{r child="../component/fundamentals.Rmd"}
+```
+
+```{r child="../component/recommendations.Rmd"}
+```
+
+```{r child="../component/quiz.Rmd"}
+```
+
+```{r child="../../common-files/src/exercise-aesthetics.Rmd"}
+```
+
+```{r child="../component/exercise-sleep.Rmd"}
+```
+
+### Summary
++ "A mapping of data to the visual aesthetics of geometries/marks" 
+  + Points are a type of geometry/mark
+  + Aesthetics for points include location, shape, size, color
++ Basic tips
+  + Don't try to squeeze in too much
+  + Double up to emphasize
+  + Shape is only good for categories
+  + Shape and size don't mix
+

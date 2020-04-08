@@ -1,0 +1,88 @@
+---
+title: "Scatterplots, Introduction"
+author: "Steve Simon"
+output: powerpoint_presentation
+date: "Created 2019-08-16"
+---
+
+### Introduction, Modules
++ Scatterplots
++ Bar charts
++ Line plots
++ Surface plots (optional)
++ Maps (optional)
+
+<div class="notes">
+
+This workshop is split up into three to five modules. The basic modules cover scatterplats, bar charts, and line plots. There are optional advanced modules on surface plots and maps.
+
+</div>
+
+### Introduction, Module components
++ Preparation
++ Exercise, what is the message?
++ Tutorial
++ Fundamentals
++ Basic exercises
++ Recommendations
++ Exercise, identify features
++ Short quiz
++ On your own
+
+<div class="notes">
+
+Each module will start with some basic preparations that you should do before the class starts or at the very beginning of the class..
+
+Then you will review some data visualizations that appeats in newpspaper or web articles. Your goal is to identify (in 25 words or less) the message is that the visualization is trying to convey. The 
+
+Each module will include a tutorial on perceptual issues that you need to understand in order to design effective data visulalizations.
+
+Then you will review some fundamental commands that you need to know to draw basic data visualizations. Warning: some of the visualizations you will be asked to produce will look terribly ugly. That's okay. You're just learning the basic programming steps for now. Later, you will see how to apply these steps to make better looking and more effective visualizations. 
+
+Then you will learn some general recommendations on how to produce effective visualizations.
+
+You will return to the newspaper articles and and relate features of the data visualizations to concepts discussed in the previous lecture.
+
+You will have to answer a short quiz, not for a grade, but to reinforce some of the important points in the module. 
+
+Finally, you will work on your own with a different data set, trying to create effective data visualizations similar to the ones presented in each module.
+
+</div>
+
+### Introduction, Software agnosticism
+
++ This course will show examples using
+  + Python,
+  + R, and 
+  + Tableau
++ I do not play favorites
+
+<div class="notes">
+
+I am a big believer in software agnosticism. That means that when I teach something, I teach it with the expectation that the software used to do the assignments is software of YOUR choosing. I have my own preferences, but those should not be your preferences.
+
+It's a lot more work to teach a course that is not dependent on a particular software system, but I do not know what the best software choice would be for you. In this class, I will try to show examples using Python, R, and Tableau. I realize that there are other good choice, but I'm hoping that most of you will be happy with one of these three choices. Within Python, I will use the altair package. In R, I will use ggplot2. I realize that there are other graphics packages in these two languages, but altair and ggplot2 rely on modern graphics principles, so I will restrict my attention to these packages.
+
+Tableau is a commercial product. If you don't currently have access to Tableau, the company offers a free version, Tableau Public. It has all the features of Tableau, but you have to store any data visualizations on a public server. That's just fine for someone like me who uses teaching examples with publicly available data sets. If you are using private or proprietary data, you need to pay the money for the commercial version.
+
+</div>
+
+### Introduction, What software should you use?
+
++ Use the software you like best
++ What does your boss use?
++ What do your co-workers use?
++ What software are you most comfortable with?
+  
+<div class="notes">
+
+If you are not sure what software package to use in this class, let me offer a few suggestions. First, your boss may have a strong opinion about what software that you should use. You can go to your boss and say "My teacher is a really smart guy says that the _____ package in _____ is the best choice for data visualization." Try it and see what happens. Nothing, I suspect. One of the great tragedies in life is that the wise advice you get in this class carries very little weight in the real world.
+
+If your boss doesn't care, see what most of your co-workers are using. They may not be as smart as I am (put on a false air of pride here) but they are a lot closer to your cubicle when this workshop ends and you have to find a quick answer.
+
+There's also a comfort level here. Tableau develops its visualizations using a graphical user interface. Python and R are programming languages. A graphical interface is great for getting work done quickly. A programming language is great for reproducibility and reusability. What fits your working style better? I don't know and it would be arrogant of me to make the presumption that I do know.
+
+One more consideration. Some of you in this class are "ringers." You already know visualization better than I do because you've been doing it for longer, with bigger and more complex data sets. You're just here to see if I know one or two things that you don't already know. If you're a ringer, take the challenge of learning a new software system. It will keep you from getting too bored when I talk about all these things that you already know better than I do.
+
+</div>
+

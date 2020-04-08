@@ -1,0 +1,19 @@
+---
+title: "Graphs in the news, What is the message?"
+author: "Steve Simon"
+output: powerpoint_presentation
+---
+
+### Graphs in the news, what is the message?
++ Your group will be assigned one particular graph and newspaper article
++ Read/skim the article and examine the graph
++ What is the message?
+  + Summarize in 25 words or less.
+
+<div class="notes">
+
+The following images are taken from various newspaper articles or press releases. Look at the graph and read/skim the article.
+
+What message do you think the journalist is trying to convey with this graph. Summarize this message in 25 words or less.
+
+</div>

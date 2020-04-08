@@ -1,0 +1,15 @@
+---
+title: "Header commands for each component markdown file"
+author: "Steve Simon"
+output: powerpoint_presentation
+date: "Created 2019-08-24"
+---
+
+```{r echo=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+source("../../common-files/src/setup.R")
+```
+
+```{r}
+if (!exists("redraw_graphs")) redraw_graphs <- FALSE
+```

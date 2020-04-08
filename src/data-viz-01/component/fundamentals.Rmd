@@ -1,0 +1,212 @@
+---
+title: "Scatterplots, Fundamentals"
+author: "Steve Simon"
+output: powerpoint_presentation
+---
+
+```{r child="../../common-files/src/component-header.Rmd"}
+```
+
+### Fundamentals, Review basic scatterplot
+
++ Python code
+
+```{}
+ch = alt.Chart(df).mark_point().encode(
+    x='Age', y='Price'
+)
+```
+
++ R code
+
+```{}
+ggplot(saratoga_houses, aes(x=Age, y=Price)) +
+  geom_point()
+```
+
++ Tableau
+  + (Drag and drop)
+  
+<div class="notes">
+
+You've already drawn a basic scatterplot in Python, R, or Tableau. All three systems choose a slightly different visualization, but, for the most part, the graphs look fairly nice. You can change some of those default options.
+
+</div>
+
+### Fundamentals, Changing default options
+
++ Python code
+
+```{}
+.mark_point(shape="square", color="green").
+```
+
++ R code
+
+```{}
+geom_point(shape="square", color="green")
+```
+
++ Tableau
+  + Click on the shape and color buttons
+  
+<div class="notes">
+
+In Python, you can change the default for every data point inside the mark_point function. In R, you do this inside the geom_point function. In Tableau, you have to click on the color and shape buttons to change the defaults.
+
+Note that you may want to change the color or shape only for some of the data points. This is done inside the encode function in Altair/Python. In R, this is done inside the aes function. In Tableau, you drag and drop certain variables on top of buttons for color and shape.
+
+</div>
+
+<!---Exercise, change default--->
+```{r child="../component/change-default.Rmd"}
+```
+
+### Fundamentals, Aesthetics for points - location (1 of 2)
+
+```{r point-aesthetics-x}
+load("../../common-files/data/houses.RData")
+initiate_image()
+x <- c(212, 103)
+x_range <- range(saratoga_houses$Age)
+y_range <- range(saratoga_houses$Price)
+g <- ggplot(saratoga_houses[x, ], aes(x=Age, y=Price)) + 
+  expand_limits(x=x_range) +
+  expand_limits(y=y_range) +
+  theme(
+    axis.text=element_text(size=16),
+    axis.title=element_text(size=20,face="bold"))
+g + geom_text(aes(label=Age), size=6)
+finalize_image("Illustration of location aesthetics")
+```
+
+`r display_image`
+
+<div class="notes">
+
+This plot show only two data points, and is labeled with the variable age, corresponding to the X location.
+
+The point on the left is a young house, only 14 years old. The point on the right is an old house, 233 years old.
+
+</div>
+
+### Fundamentals, Aesthetics for points - location (2 of 2)
+
+```{r point-aesthetics-y}
+initiate_image()
+g + geom_text(aes(label=format(Price, big.mark=",")), size=6)
+finalize_image("Illustration of location aesthetics")
+```
+
+`r display_image`
+
+<div class="notes">
+
+This plot is labeled with the variable Price, corresponding to the Y location.
+
+The point in the up high is an expensive house, over a half million dollars. The point down low a cheap house, about one-tenth of the price.
+
+</div>
+
+<!---Exercise, change location--->
+```{r child="../component/change-location.Rmd"}
+```
+
+### Fundamentals, Aesthetics for points - shape
+
+```{r point-aesthetics-shape}
+initiate_image()
+g + 
+  geom_point(aes(shape=factor(Bedrooms)), size=5)
+finalize_image("Illustration of shape aesthetics")
+```
+
+`r display_image`
+
+<div class="notes">
+
+The house in the upper left corner has four bedrooms, and the house in the lower right corner has five bedrooms. You use circles and triangles to designate this and the legend on the right hand side tells you how to decipher the symbols.
+
+I want to note here that this plot is effectively showing three dimensions, Age, Price, and Bedrooms, even though it is restricted to a two dimensional screen.
+
+I also want to point out that this may not be the best way to visualize the relationship among these three variables.
+
+</div>
+
+<!---Exercise, change shape--->
+```{r child="../component/change-shape.Rmd"}
+```
+
+### Fundamentals, Aesthetics for points - size
+
+```{r point-aesthetics-size}
+initiate_image()
+g + 
+  geom_point(aes(size=Living.Area))
+finalize_image("Illustration of size aesthetics")
+```
+
+`r display_image`
+
+<div class="notes">
+
+You can also use the size of a point to represent a third dimension. Here is a plot where the larger house, the house with more living area has a big circle and the house with less living area has a small circle. 
+
+</div>
+
+<!---Exercise, change size--->
+```{r child="../component/change-size.RMd"}
+```
+
+### Fundamentals, Aesthetics for points - color (1 of 2)
+
+```{r point-aesthetics-color-1}
+initiate_image()
+g +
+  geom_point(aes(color=factor(Bathrooms)), size=5)
+finalize_image("Illustration of color aesthetics")
+```
+
+`r display_image`
+
+<div class="notes">
+
+This plot shows a blue point representing a four bathroom house in the upper left corner and an orange point representing a two bathroom house in the lower right corner.
+
+</div>
+
+### Fundamentals, Aesthetics for points - color (2 of 2)
+
+```{r point-aesthetics-color-2}
+initiate_image()
+g +
+  geom_point(aes(color=Living.Area), size=5)
+finalize_image("R graph using color to represent Living.Area")
+```
+
+`r display_image`
+
+<div class="notes">
+
+Notice how the legend has changed. All of the graphic packages use a set of discrete, easily distinguishable colors for categorical data. For continuous data, these graphic packages use a gradient.
+
+We'll discuss discrete colors versus gradients in a separate module.
+
+</div>
+
+```{r child="../component/change-color.Rmd"}
+```
+
+### Fundamentals, summary
++ In this section, you learned how to use Python, R, and/or Tableau to
+  + Assign variables to the x and y position of a graph
+  + Change the defaults for aesthetics like shape and color
+  + Assign a third variable to shape, size, or color
+  
+<div class="notes">
+
+Pat yourself on the back because you've alredy learned a lot. You know how to assign variables to the x and y positions of a graph. You can change the default appearance of the points on that graph. You can include a third variable in your graph, represented by shape, size, or color.
+
+(Note to myself) The use of panels is an important aspect of visualization, and it is unclear to me where best to introduce it. Possibly it could be another dimension of location. You have your x position and your y position, but you also have a position within one of several panels.
+
+</div>

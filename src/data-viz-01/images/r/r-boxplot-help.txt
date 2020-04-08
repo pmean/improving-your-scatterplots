@@ -1,0 +1,3 @@
+This image is taken from the help file for R is published under the GNU General Public License (GPL), version 2. It was found at
+
+https://www.rdocumentation.org/packages/graphics/versions/3.6.0/topics/boxplot

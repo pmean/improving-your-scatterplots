@@ -1,0 +1,57 @@
+---
+title: "Scatterplots, quiz"
+author: "Steve Simon"
+output: powerpoint_presentation
+---
+
+### Quick quiz (1 of 4)
+Data visualization is a mapping of data to the visual aesthetics of geometries/marks. Some examples of visual aesthetics include (choose all that apply)
+
+1. Size
+2. Points
+3. Shapes
+
+<div class="notes">
+
+Answer: 1 and 3 (size and shapes)
+
+</div>
+
+### Quick quiz (2 of 4)
+The log transformation works by (choose the best answer)
+
+1. Stretching all data values equally.
+2. Stretching the small values and squeezing the large values.
+3. Stretching the large values and squeezing the small values.
+
+<div class="notes">
+
+Answer: 2 (strethcing the small values and squeezing the large values)
+
+</div>
+
+### Quick quiz (3 of 4)
+Strategies that can sometimes help when you have a lot of problems with overprinting include (choose all that apply)
+
+1. Using open circles
+2. Using large size points
+3. Using translucent points
+
+<div class="notes">
+
+Answer: 1 and 3 (using open circles and translucent points)
+
+</div>
+
+### Quick quiz (4 of 4)
+The two visual aesthetics that doen't work well together are (choose the best answer)
+
+1. color and size
+2. color and shape
+3. size and shape
+
+<div class="notes">
+
+Answer: 3 (size and shape)
+
+</div>

@@ -1,0 +1,101 @@
+---
+title: "Scatterplots exercise, change location"
+author: "Steve Simon"
+output: powerpoint_presentation
+date: "Created 2019-08-24"
+---
+
+```{r child="../../common-files/src/component-header.Rmd"}
+```
+
+### Exercise, change the location
+
++ Use the Saratoga housing data set.
++ Revise the plot so that the location of the points represents X=Bedrooms and Y=Price.
+
+<div class="notes">
+
+Go back to the plot you just drew. Modify it so that the x location is Bedrooms and not Age.
+
+</div>
+
+### Exercise, Python code
++ Here's the Python code.
+```
+ch = alt.Chart(df).mark_point().encode(
+    x='Bedrooms',
+    y='Price'
+)
+```
+
+<div class="notes">
+
+You specify the x and y locations inside the encode function.
+
+</div>
+
+### Exercise, Python output
+
+![Python scatterplot of bedrooms and price](../images/python/altair-basic-exercise-location.png)
+
+<div class="notes">
+
+This is what the Python graph should look like. There is a general upward trend. Houses with more bedrooms tend to cost more.
+
+</div>
+
+### Exercise, R code
++ Here's the R code
+```
+ggplot(
+  saratoga_houses, 
+  aes(x=Bedrooms, y=Price)) + 
+  geom_point())
+```
+
+<div class="notes">
+
+In R, the X and Y locations go inside the aes function. Normally the aes function sits insider the ggplot function.
+
+</div>
+
+### Exercise, R output
+
+```{r bedrooms-and-price}
+load("../../common-files/data/houses.RData")
+initiate_image()
+ggplot(saratoga_houses, aes(x=Bedrooms, y=Price)) + 
+  geom_point()
+finalize_image("Scatterplot of bedrooms and price")
+```
+
+`r display_image`
+
+<div class="notes">
+
+This is the plot in R. It shows a general upward trend.
+
+</div>
+
+### Exercise, Tableau steps
++ (Take your existing scatterplot of age and price)
++ Click on the Age pill
+  + Choose the remove option
++ Drag Bedrooms to the Columns field
+  + Change to Dimension, Continuus
+  
+<div class="notes">
+
+In Tableau, click on Age in the Columns field and choose the remove option. The graph looks a bit weird with no columns, but ignore it. Drag Bedrooms over to the Columns field. Tableau wants to use a sum, but you want individual data points. So click on SUM(Bedrooms) and change it to a Dimension.
+
+</div>
+
+### Exercise, Tableau output
+
+![Tableau scatterplot of Bedrooms and Price](../images/tableau/bedrooms-vs-price.png)
+
+<div class="notes">
+
+Here is the Tableau output.
+
+</div>

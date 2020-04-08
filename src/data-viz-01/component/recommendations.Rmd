@@ -1,0 +1,229 @@
+---
+title: "Scatterplots, Recommendations"
+author: "Steve Simon"
+output: powerpoint_presentation
+---
+
+```{r child="../../common-files/src/component-header.Rmd"}
+```
+
+### Recommendations, outline of topics
++ Solving problems with overprinting
++ Don't mix shape and size
++ Double up for emphasis
++ Shape is only good for categories
++ Size is only good for continuous variables.
+
+<div class="notes">
+
+Here are some general recommendations for scatterplots.
+
+First, if you have a lot of data, your scatterplot may look like a large black blob in one corner of your graph with a few stgray points in the other corners. Or it may look like a large elliptical blob in the center of the graph. Either way, there are several strategies to help you see patterns that might otherwise be lost with overprinting.
+
+Another important lesson is to not let both the size and the shape aesthetic to vary within the same graph. At the same time, you can sometimes double up aesthetics, letting both the shape and the color, for example, to both represent the same variable.
+
+The other important issue is that shape is a useful aesthetic only for categorical data, while size is only good for continuous variables.
+
+</div>
+
+### Recommendations, Solutions to excessive overprinting
++ Open symbols
++ Small points
++ Opacity
++ Log scale
+
+<div class="notes">
+
+The plots that you have drawn tend to have difficulty with overprinting. Too many data points crammed into a small area produces a large solid blob that is hard to interpret. There are four possible solutions: open symbols, small points, opacity, and a log scale.
+
+</div>
+
+### Recommendations, Overprinting - open symbols
+
+```{r open-symbols}
+load("../../common-files/data/houses.RData")
+initiate_image()
+ggplot(saratoga_houses, aes(x=Age, y=Price)) +
+  geom_point(size=5, shape=1) +
+  theme(
+    axis.text=element_text(size=16),
+    axis.title=element_text(size=20,face="bold"))
+finalize_image("R graph using open circles")
+```
+
+`r display_image`
+
+<div class="notes">
+
+Open symbols have less trouble with overprinting. They use less ink and it is easier to disentanlge two or three partially overlapping symbols.
+
+</div>
+
+### Recommendations, Overprinting - small points
+
+```{r small-points}
+initiate_image()
+ggplot(saratoga_houses, aes(x=Age, y=Price)) +
+  geom_point(size=1) +
+  theme(
+    axis.text=element_text(size=16),
+    axis.title=element_text(size=20,face="bold"))
+finalize_image("Graph using small points")
+```
+
+`r display_image`
+
+<div class="notes">
+
+Smaller data points have less trouble with overprinting.
+
+</div>
+
+### Recommendations, Overprinting - opacity
+
+```{r point-opacity}
+load("../../common-files/data/houses.RData")
+initiate_image()
+ggplot(saratoga_houses, aes(x=Age, y=Price)) +
+  geom_point(alpha=0.1, size=5) +
+  theme(
+    axis.text=element_text(size=16),
+    axis.title=element_text(size=20,face="bold"))
+finalize_image("Graph using opacity")
+```
+
+`r display_image`
+
+<div class="notes">
+
+If you make the data points somewhat translucent, so that you can see what it behind it, this prevents a massive black blob from forming. You have to experiement a bit with the level of translucence.
+
+</div>
+
+### Recommendations, Overprinting - log scale
+
+```{r point-log-scale}
+initiate_image()
+saratoga_houses$age_plus <- saratoga_houses$Age + runif(1057)
+ggplot(saratoga_houses, aes(x=age_plus, y=Price)) +
+  geom_point(size=5, shape=1) +
+  scale_x_log10() +
+  theme(
+    axis.text=element_text(size=16),
+    axis.title=element_text(size=20,face="bold"))
+finalize_image("Graph using log scales")
+```
+
+`r display_image`
+
+<div class="notes">
+
+The log function stretches the small values and squeeze the large values. Here the log scale is used on the x-axis only and the points that are all piled on top of one another on the left side of the graph are stretched apart. The outlying points on the right, the very, very old houses are fairly rare and waste some of the space that you might need for the far more numerous new houses. The log squeezes these few old houses together. The points are more evenly distributed across the x-axis when you use a log scale, so you can see more details and have less overprinting.
+
+It doesn't work perfectly, and sometimes the log scale is like jumping from the frying pan into the fire. But it is easy enough to try, so what the heck!
+
+</div>
+
+### Recommendations, Don't try to squeeze in too much.
+
+```{r point-aesthetics-color-3}
+initiate_image()
+binary_colors <- c("red", "red", "blue", "blue", "blue", "blue", "blue", "blue")
+ggplot(saratoga_houses, aes(x=Age, y=Price)) +
+  geom_point(aes(color=factor(Bathrooms)), size=5, shape=1) +
+  scale_color_manual(values=binary_colors) +
+  theme(
+    axis.text=element_text(size=16),
+    axis.title=element_text(size=20,face="bold"))
+finalize_image("Graph using only two colors")
+```
+
+`r display_image`
+
+<div class="notes">
+
+Sometimes less is more, and that is especially true for colors. Rather than assign eight different colors to the eight different number of bathrooms, why not just have two colors. Red for a small number of bathrooms (1.5 or less) and blue for a large number of bathrooms (2 or more).
+
+Sure you are losing some information, but the increasing clarity of the pattern more than compensates. Note that I deliberately included redundant values in the legend to better emphasize the choice I made. I would not recommend this for a final graph.
+
+</div>
+
+### Recommendations, Double up to emphasize
+
+```{r double-up}
+initiate_image()
+saratoga_houses$age_plus <- saratoga_houses$Age + runif(1057)
+binary_colors <- c("red", "red", "blue", "blue", "blue", "blue", "blue", "blue")
+ggplot(saratoga_houses, aes(x=age_plus, y=Price)) +
+  geom_point(aes(color=factor(Bathrooms), shape=factor(Bathrooms)), size=5) +
+  scale_color_manual(values=binary_colors) + 
+  scale_shape_manual(values=rep(c(1, 4), c(2, 6))) +
+  theme(
+    axis.text=element_text(size=16),
+    axis.title=element_text(size=20,face="bold"))
+finalize_image("Graph using colors and shapes")
+```
+
+`r display_image`
+
+<div class="notes">
+
+It's okay to map a single variable to more than one aesthetic. In fact, this often helps emphasize that variable. Here, both the shape and the color are associated with the number of bathrooms. It makes things a bit easier to pick out.
+
+</div>
+
+### Recommendations, Use shape only for categorical variables
+
+```{r shape-revisted}
+saratoga_houses <- read.csv("../../common-files/data/houses.csv")
+initiate_image()
+ggplot(saratoga_houses, aes(x=Age, y=Price)) + 
+  geom_point(aes(shape=factor(Bedrooms))) +
+  theme(
+    axis.text=element_text(size=16),
+    axis.title=element_text(size=20,face="bold"))
+finalize_image(" ")
+```
+
+`r display_image`
+
+<div class="notes">
+
+First, shape makes sense only for categorical data. If you have a large number of values, as is typical for a continuous variable, you run out of symbols before you run out of categories.
+
+Even if your continuous variable only has a small number of values (e.g., Bedrooms which can equal 1, 2, 3, or 4 in our data set), don't use shape. Shape has no natural order.
+
+</div>
+
+### Recommendations, Shape and size don't mix
+
+```{r size-and-shape}
+saratoga_houses <- read.csv("../../common-files/data/houses.csv")
+initiate_image()
+ggplot(saratoga_houses, aes(x=Age, y=Price)) + 
+  geom_point(aes(shape=factor(Bedrooms), size=Bathrooms)) +
+  theme(
+    axis.text=element_text(size=16),
+    axis.title=element_text(size=20,face="bold"))
+finalize_image(" ")
+```
+
+`r display_image`
+
+<div class="notes">
+
+Also size and shape don't mix. You can really compare two diffent shapes, such as an X and an O on size. Is the size related to the diameter, the area, or the perimeter? There's no really good answer, so it's asking too much of a graph that asks you to decide which is larger among points represent different shapes. Either vary the shape or vary the size, but not both.
+
+</div>
+
+### Recommendations, summary
++ Overprinting
+  + Open symbols
+  + Small points
+  + Opacity
+  + Log transformation
++ Don't try to squeeze in too much
++ Double up to emphasize
++ Shape is for categorical variables
++ Size is for continuous variables
++ Size and shape don't mix

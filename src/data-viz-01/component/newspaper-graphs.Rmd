@@ -1,0 +1,54 @@
+---
+title: "Graphs in the news, scatterplots"
+author: "Steve Simon"
+output: powerpoint_presentation
+date: "Created: 2019-08-24"
+---
+
+### Graphs in the news, group exercise
++ Review one of these graphs/newspaper articles
+  + [We Charted Arctic Sea Ice for Nearly Every Day Since 1979. You’ll See a Trend.](https://www.nytimes.com/interactive/2017/09/22/climate/arctic-sea-ice-shrinking-trend-watch.html)
+  + [We Read 150 Privacy Policies. They Were an Incomprehensible Disaster.](https://www.nytimes.com/interactive/2019/06/12/opinion/facebook-google-privacy-policies.html)
+  + [How Medicine Became the Stealth Family Friendly Profession.](https://nytimes.com/2019/08/21/upshot/medicine-family-friendly-profession-women.html)
+
+<div class="notes">
+
+The following images are taken from various newspaper articles. Look at the graph and read/skim the article.
+
+</div>
+
+### Graphs in the news, Arctic ice levels
+
+![Scatterplot of Arctic ice levels](../images/external/arctic-ice-scatterplot.png)
+
+<div class="notes">
+
+This image was found in a newpaper article, 
+
+Popvich, N., Fountain, H., & Pearce, A. (2017, September 22). We Charted Arctic Sea Ice for Nearly Every Day Since 1979. You’ll See a Trend. - The New York Times. The New York Times. Retrieved from https://www.nytimes.com/interactive/2017/09/22/climate/arctic-sea-ice-shrinking-trend-watch.html
+
+</div>
+
+### Graphs in the news, Privacy policies
+
+![Scatterplot of length versus reader difficulty](../images/external/privacy-policies.png)
+
+<div class="notes">
+
+This image was found in a newpaper article, 
+
+Kevin Litman-Navarro. We Read 150 Privacy Policies. They Were an Incomprehensible Disaster. The New York Times. Retrieved from https://www.nytimes.com/interactive/2019/06/12/opinion/facebook-google-privacy-policies.html
+
+</div>
+
+### Graphs in the news, Family friendly profession
+
+![](../images/external/female-doctors.png)
+
+<div class="notes">
+
+This image was found in a newpaper article, 
+
+Claire Cain Miller (2019, August 21). How Medicine Became the Stealth Family Friendly Profession. The New York Times. Retrieved from https://nytimes.com/2019/08/21/upshot/medicine-family-friendly-profession-women.html
+
+</div>

@@ -1,0 +1,52 @@
+---
+title: "data-management.Rmd"
+author: "Steve Simon"
+date: "9/28/2019"
+output: html_document
+---
+
+```{r child="../../common-files/src/component-header.Rmd"}
+```
+
+This program does some pre-processing of important data files.
+
+```{r read-cpi}
+food_away <- read.csv("../data/cpi-food-away-from-home.csv", header=FALSE, skip=1, as.is=TRUE)
+names(food_away) <- c("tim", "cpi")
+food_away$index <- "food_away"
+food_away$t <- 1953 + (0:(dim(food_away)[1]-1))/12
+i <- which(food_away$tim=="2002-01-01")
+food_away$cpi <- 100* food_away$cpi / food_away$cpi[i]
+ggplot(food_away, aes(t, cpi)) +
+  geom_line()
+
+food_home <- read.csv("../data/cpi-food-at-home.csv", header=FALSE, skip=1, as.is=TRUE)
+names(food_home) <- c("tim", "cpi")
+food_home$index <- "food_home"
+food_home$t <- 1952 + (0:(dim(food_home)[1]-1))/12
+i <- which(food_home$tim=="2002-01-01")
+food_home$cpi <- 100* food_home$cpi / food_home$cpi[i]
+ggplot(food_home, aes(t, cpi)) +
+  geom_line()
+
+food_pets <- read.csv("../data/cpi-pet-food.csv", header=FALSE, skip=1, as.is=TRUE)
+names(food_pets) <- c("tim", "cpi")
+food_pets$index <- "food_pets"
+food_pets$t <- 2002 + (0:(dim(food_pets)[1]-1))/12
+i <- which(food_pets$tim=="2002-01-01")
+food_pets$cpi <- 100* food_pets$cpi / food_pets$cpi[i]
+
+ggplot(food_pets, aes(t, cpi)) +
+  geom_line()
+food_away %>%
+  bind_rows(food_home) %>%
+  bind_rows(food_pets) %>%
+  filter(t >= 2002) %>%
+  mutate(t=round(t, 2)) %>%
+  mutate(cpi=round(cpi, 2)) -> food_comb
+ggplot(food_comb, aes(t, cpi, color=index)) +
+  geom_line()
+
+write.csv(food_comb, file="../data/cpi-food.csv", row.names=FALSE)
+save(food_comb, file="../data/cpi-food.RData")
+```

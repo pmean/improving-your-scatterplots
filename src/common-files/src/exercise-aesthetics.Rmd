@@ -1,0 +1,16 @@
+---
+title: "Identify the aesthetics"
+author: "Steve Simon"
+output: powerpoint_presentation
+---
+
+### Graphs in the news, what are the aesthetics?
++ What aesthetics (location, shape, size, color) are used?
++ What aesthetics are not used?
++ What variables are mapped to which aesthetics?
+
+<div class="notes">
+
+Review the same newspaper article and graph that you used earlier. Identify the various aesthetics that are used or are not used in your graph. What variables are associated with which aesthetics?
+
+</div>
