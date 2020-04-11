@@ -159,12 +159,13 @@ There are some questions, of course, that are still answered faster and more acc
 
 </div>
 
-### Read Saratoga
+### A five dimensional scatterplot
   
 ```{r read, eval=FALSE}  
 fn <- "https://dasl.datadescription.com/download/data/3437"
 sa <- read.table(fn, header=TRUE, sep="\t", stringsAsFactors=FALSE)
 save(sa, file="../data/saratoga_housing.RData")
+write.csv(sa, "../data/saratoga_housing.csv", row.names=FALSE)
 ```
 
 ```{r first-plot}
@@ -234,6 +235,22 @@ faded_plot +
   geom_text(x=sa$Size[p1], y=sa$Price[p1]+75, label=sa$Baths[p1], size=4, color=sa$Baths[p1]) +
   geom_text(x=sa$Size[p2], y=sa$Price[p2]+75, label=sa$Baths[p2], size=4, color=sa$Baths[p2])
 ```
+
+### X and Y position
++ Biggest issue is overprinting
++ Partial solutions
+  + Small size
+  + Open symbols
+  + Log transformation
+  + Opacity
+
+<div class="notes">
+
+
+
+</div>
+
+###
 
 ### Log
 
