@@ -86,3 +86,10 @@ One more consideration. Some of you in this class are "ringers." You already kno
 
 </div>
 
+### Saratoga house prices
+
+```{r read, echo=FALSE, comment=""}
+fn <- "https://dasl.datadescription.com/download/data/3437"
+sa <- read.table(fn, header=TRUE, sep="", stringsAsFactors=FALSE)
+head(sa)
+```

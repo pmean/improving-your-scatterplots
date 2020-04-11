@@ -1,0 +1,294 @@
+149.64 Cabot
+143.72 East Calais
+142.87 Woodbury
+138.05 West Danville
+137.12 North Troy
+136.82 Troy
+136.59 Westfield
+136.54 Marshfield
+136.26 Hyde Park
+136.09 Lowell
+135.96 Albany
+135.31 Craftsbury
+135.07 Morrisville
+134.54 Eden Mills
+132.34 Danville
+131.89 North Hyde Park
+131.57 Johnson
+131.21 Peacham
+130.70 Lake Elmore
+127.40 Stowe
+127.02 Wolcott
+126.60 North Montpelier
+126.50 East Montpelier
+125.70 Calais
+125.56 Lyndonville
+125.43 Lyndon Center
+125.30 Adamant
+124.40 Plainfield
+123.99 Belvidere Center
+123.53 East Hardwick
+123.11 West Burke
+122.82 Hardwick
+122.71 Worcester
+122.63 East Burke
+122.46 Saint Johnsbury Center
+121.96 Saint Johnsbury
+121.51 Greensboro Bend
+121.28 Morgan
+121.21 West Charleston
+121.19 Derby Line
+121.19 Derby
+121.17 Beebe Plain
+121.13 Lyndon
+121.13 Derby Center
+120.22 Newport
+120.16 Barton
+120.13 Greensboro
+120.12 Sheffield
+120.10 Orleans
+120.07 Newport Center
+120.04 Glover
+119.96 Coventry
+119.74 Irasburg
+119.66 West Glover
+119.20 Bakersfield
+118.83 Craftsbury Common
+118.81 Montpelier
+118.55 Waterville
+118.09 Northfield Falls
+118.01 Sutton
+117.60 Northfield
+115.67 Waterbury Center
+113.99 Montgomery
+113.99 Montgomery Center
+113.60 Barre
+113.25 Eden
+112.92 Brookfield
+112.80 Williamstown
+112.35 Passumpsic
+111.66 Island Pond
+111.10 Roxbury
+111.02 East Haven
+110.61 Granville
+110.52 Norton
+110.35 Beecher Falls
+109.96 Canaan
+109.87 East Charleston
+109.37 Averill
+107.62 Randolph
+107.40 Randolph Center
+107.35 East Randolph
+107.27 East Saint Johnsbury
+106.77 Moretown
+106.70 Tunbridge
+106.65 Chelsea
+105.85 Moscow
+105.53 South Barre
+105.08 Graniteville
+104.86 Websterville
+104.55 Bethel
+104.31 East Barre
+102.63 Rochester
+102.09 Waitsfield
+101.70 Barnet
+101.57 Washington
+100.85 Richford
+100.71 Concord
+100.66 East Berkshire
+100.09 Lower Waterford
+ 99.62 Groton
+ 99.44 Waterbury
+ 99.16 Guildhall
+ 98.69 Cambridgeport
+ 98.61 Topsham
+ 97.23 Saxtons River
+ 96.63 Grafton
+ 96.62 Strafford
+ 95.98 North Concord
+ 95.93 Vershire
+ 95.30 West Townshend
+ 95.30 Gilman
+ 95.22 West Topsham
+ 95.13 Townshend
+ 95.08 Granby
+ 94.83 Bellows Falls
+ 94.76 Mc Indoe Falls
+ 94.64 North Westminster
+ 94.37 South Royalton
+ 93.34 South Newfane
+ 93.28 Enosburg Falls
+ 93.10 Williamsville
+ 92.84 Warren
+ 92.79 West Brattleboro
+ 92.58 Brattleboro
+ 92.54 Newfane
+ 92.05 Jacksonville
+ 91.77 Lunenburg
+ 91.03 West Halifax
+ 91.03 Wardsboro
+ 90.99 Marlboro
+ 90.73 Vernon
+ 90.64 Westminster Station
+ 90.51 Post Mills
+ 90.44 West Fairlee
+ 89.88 South Strafford
+ 89.86 Stockbridge
+ 89.35 Corinth
+ 89.11 South Ryegate
+ 88.96 East Corinth
+ 88.81 Jamaica
+ 87.83 East Ryegate
+ 87.58 Barnard
+ 87.34 Putney
+ 87.21 Westminster
+ 87.02 Sharon
+ 86.91 West Dummerston
+ 86.60 East Dover
+ 86.42 Hancock
+ 86.20 Wells River
+ 85.72 Newbury
+ 85.09 Chester
+ 84.59 North Pomfret
+ 84.29 West Hartford
+ 83.80 Whitingham
+ 83.11 Springfield
+ 82.47 Fairlee
+ 82.33 Thetford Center
+ 82.32 North Thetford
+ 82.21 Thetford
+ 82.02 Proctorsville
+ 82.00 Ludlow
+ 81.97 Cavendish
+ 81.95 North Springfield
+ 81.85 Ripton
+ 81.53 Chester Depot
+ 81.09 Franklin
+ 81.06 South Londonderry
+ 81.06 East Thetford
+ 80.86 Weston
+ 80.68 Bradford
+ 80.29 West Newbury
+ 79.96 Pittsfield
+ 79.22 Perkinsville
+ 77.87 Jeffersonville
+ 77.76 East Middlebury
+ 77.70 Reading
+ 77.09 West Wardsboro
+ 76.79 South Pomfret
+ 76.57 Ascutney
+ 75.80 Underhill
+ 75.65 Londonderry
+ 75.57 Hartland Four Corners
+ 75.45 Brownsville
+ 75.20 Taftsville
+ 75.19 Woodstock
+ 75.18 South Woodstock
+ 75.10 Bridgewater
+ 75.05 Wilmington
+ 74.82 West Dover
+ 74.74 Hartland
+ 74.72 Norwich
+ 74.29 Gaysville
+ 74.26 Windsor
+ 73.92 Quechee
+ 73.89 North Hartland
+ 73.64 Hartford
+ 73.04 East Fairfield
+ 72.91 Mount Holly
+ 72.70 Bridgewater Corners
+ 72.24 Sheldon
+ 72.22 Sheldon Springs
+ 72.19 Highgate Center
+ 72.18 Fairfield
+ 72.13 Westford
+ 71.89 Underhill Center
+ 71.50 Chittenden
+ 71.38 Cambridge
+ 71.36 Plymouth
+ 71.03 Peru
+ 70.90 White River Junction
+ 70.88 Killington
+ 70.80 Wilder
+ 70.68 Pittsford
+ 70.53 Richmond
+ 69.56 Readsboro
+ 69.35 Hinesburg
+ 69.23 Huntington
+ 69.04 Middlebury
+ 68.96 Starksboro
+ 68.93 Jonesville
+ 68.00 Jericho
+ 67.90 Essex
+ 67.88 Orwell
+ 67.43 Florence
+ 67.34 Belmont
+ 67.10 Cuttingsville
+ 66.96 East Wallingford
+ 66.87 Williston
+ 66.80 Essex Junction
+ 66.44 Rutland
+ 66.14 Proctor
+ 66.02 Center Rutland
+ 65.81 West Rutland
+ 65.72 Salisbury
+ 65.66 Fairfax
+ 65.59 Highgate Springs
+ 65.55 Swanton
+ 65.53 Saint Albans
+ 65.47 Milton
+ 64.88 South Burlington
+ 64.77 Wallingford
+ 64.37 Stamford
+ 64.35 Benson
+ 64.08 Bridport
+ 63.92 Monkton
+ 63.55 Bristol
+ 62.89 New Haven
+ 62.20 East Poultney
+ 62.17 Middletown Springs
+ 62.16 Poultney
+ 62.08 Fair Haven
+ 61.98 Hydeville
+ 61.92 Bomoseen
+ 61.90 Vergennes
+ 61.90 North Clarendon
+ 61.81 Castleton
+ 61.47 North Bennington
+ 61.36 Forest Dale
+ 61.33 Brandon
+ 61.22 Whiting
+ 61.10 Shoreham
+ 60.99 Bennington
+ 60.99 East Arlington
+ 60.85 Old Bennington
+ 60.78 South Shaftsbury
+ 60.42 North Ferrisburgh
+ 60.31 Wells
+ 60.24 Danby
+ 60.13 Pawlet
+ 60.06 Colchester
+ 59.80 Saint Albans Bay
+ 59.75 Ferrisburgh
+ 59.73 Dorset
+ 59.55 North Hero
+ 59.53 Alburgh
+ 59.51 Isle La Motte
+ 59.49 Alburg
+ 59.48 Grand Isle
+ 59.43 West Pawlet
+ 59.23 South Hero
+ 59.11 Winooski
+ 58.83 Burlington
+ 58.72 Manchester
+ 58.45 Bondville
+ 58.27 Manchester Center
+ 57.70 Arlington
+ 57.57 East Dorset
+ 57.29 Shaftsbury
+ 57.24 Pownal
+ 56.90 West Rupert
+ 56.41 Rupert
+ 55.67 Charlotte
+ 55.37 Shelburne
+ 54.13 North Pownal
