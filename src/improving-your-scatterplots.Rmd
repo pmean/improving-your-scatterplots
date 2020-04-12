@@ -250,13 +250,75 @@ faded_plot +
 
 </div>
 
-###
+### Open circles
 
-### Log
+:::::: {.columns}
+::: {.column}
+![Original scatterplot](../images/scatter-filled.png)
+:::
+::: {.column}
+![Scatterplot with open circles](../images/scatter-open.png)
+:::
+::::::
 
-```{r log}
-ggplot(sa, aes(log(Size), log(Price))) + geom_point()
-```
+<div class="notes">
+
+
+
+</div>
+
+### Small size
+
+:::::: {.columns}
+::: {.column}
+![Original scatterplot](../images/scatter-filled.png)
+:::
+::: {.column}
+![Scatterplot with smaller sized symbols](../images/scatter-small.png)
+:::
+::::::
+
+<div class="notes">
+
+
+
+</div>
+
+### Opacity
+
+:::::: {.columns}
+::: {.column}
+![Original scatterplot](../images/scatter-filled.png)
+:::
+::: {.column}
+![Scatterplot with opacity](../images/scatter-opacity.png)
+:::
+::::::
+
+<div class="notes">
+
+
+
+</div>
+
+### Log scale
+
+:::::: {.columns}
+::: {.column}
+![Original scatterplot](../images/scatter-filled.png)
+:::
+::: {.column}
+![Scatterplot with log scale](../images/scatter-log.png)
+:::
+::::::
+
+<div class="notes">
+
+
+
+</div>
+
+
 
 
 ### Recommended books
