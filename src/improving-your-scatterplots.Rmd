@@ -196,7 +196,7 @@ faded_plot <- plot_framework + geom_point(alpha=sa$highlight)
 faded_plot
 ```
 
-### First dimension: X position
+### X position <- Square footage
 
 ```{r}
 faded_plot + 
@@ -204,7 +204,7 @@ faded_plot +
   geom_text(x=sa$Size[p2], y=0, label=sa$Size[p2], size=4, color="black")
 ```
 
-### Second dimension: Y position
+### Y position <- Price
 
 ```{r}
 faded_plot + 
@@ -212,7 +212,7 @@ faded_plot +
   geom_text(x=0.2, y=sa$Price[p2], label=round(sa$Price[p2]), size=4, color="black")
 ```
 
-### Third dimension: size
+### Size <- Number of bedrooms
 
 ```{r}
 faded_plot + 
@@ -220,7 +220,7 @@ faded_plot +
   geom_text(x=sa$Size[p2], y=sa$Price[p2]+75, label=sa$Bedrooms[p2], size=5, color="black")
 ```
 
-### Fourth dimension: shape
+### Shape <- Fireplace indicator
 
 ```{r}
 faded_plot + 
@@ -228,7 +228,7 @@ faded_plot +
   geom_text(x=sa$Size[p2], y=sa$Price[p2]+75, label="Fireplace", size=4, color="black")
 ```
 
-### Fifth dimension: color
+### Color <- Number of bathrooms
 
 ```{r}
 faded_plot + 
@@ -243,12 +243,29 @@ faded_plot +
   + Open symbols
   + Log transformation
   + Opacity
+  + Jittering
 
 <div class="notes">
 
 
 
 </div>
+
+### Open circles
+
+```{r open}
+x0 <- c(12, 13, 14, 14) 
+y0 <- c(12, 12, 13, 14)
+artificial_data <- data.frame(
+  x=c(x0, x0+15),
+  y=c(y0+10, y0+10)
+)
+lims <- c(10, 30)
+ggplot(artificial_data, aes(x, y)) +
+  theme_void() +
+  expand_limits(x=lims, y=lims) +
+  geom_point(size=20, shape=rep(c(16, 1), each=4))
+```
 
 ### Open circles
 
@@ -269,6 +286,22 @@ faded_plot +
 
 ### Small size
 
+```{r small-size}
+x0 <- c(12, 13, 14, 14) 
+y0 <- c(12, 12, 13, 14)
+artificial_data <- data.frame(
+  x=c(x0, x0+15),
+  y=c(y0+10, y0+10)
+)
+lims <- c(10, 30)
+ggplot(artificial_data, aes(x, y)) +
+  theme_void() +
+  expand_limits(x=lims, y=lims) +
+  geom_point(shape=16, size=rep(c(20, 7), each=4))
+```
+
+### Small size
+
 :::::: {.columns}
 ::: {.column}
 ![Original scatterplot](../images/scatter-filled.png)
@@ -283,6 +316,22 @@ faded_plot +
 
 
 </div>
+
+### Opacity
+
+```{r opacity}
+x0 <- c(12, 13, 14, 14) 
+y0 <- c(12, 12, 13, 14)
+artificial_data <- data.frame(
+  x=c(x0, x0+15),
+  y=c(y0+10, y0+10)
+)
+lims <- c(10, 30)
+ggplot(artificial_data, aes(x, y)) +
+  theme_void() +
+  expand_limits(x=lims, y=lims) +
+  geom_point(shape=16, size=20, alpha=rep(c(1, 0.2), each=4))
+```
 
 ### Opacity
 
@@ -303,6 +352,66 @@ faded_plot +
 
 ### Log scale
 
+```{r log-scale00}
+y0 <- seq(-4, 3, length=100)
+x0 <- 2^y0
+artificial_data <- data.frame(
+  x=x0,
+  y=y0
+)
+log_plot00 <- 
+  ggplot(artificial_data, aes(x, y)) +
+    theme_void() +
+    expand_limits(x=c(-2, 9), y=c(-7, 6)) +
+    geom_line()
+ggsave("../images/log-plot00.png", log_plot00, width=4, height=4)
+```
+
+![Log function](../images/log-plot00.png)
+
+
+### Log scale
+
+```{r log-scale01}
+a <- 0.3
+b <- 0.8
+log_plot01 <- log_plot00 + 
+    geom_segment(x=a, y=-4.1, xend=a, yend=log2(a)) +
+    geom_segment(x=b, y=-4.1, xend=b, yend=log2(b)) +
+    geom_segment(x=-0.3, y=log2(a), xend=a, yend=log2(a)) +
+    geom_segment(x=-0.3, y=log2(b), xend=b, yend=log2(b)) +
+    geom_text(x=a, y=-5, label=a, angle=90) +
+    geom_text(x=-1, y=log2(a), label=round(log2(a), 1)) +
+    geom_text(x=b, y=-5, label=b, angle=90) +
+    geom_text(x=-1, y=log2(b), label=round(log2(b), 1))
+ggsave("../images/log-plot01.png", log_plot01, width=4, height=4)
+```
+
+![Log transformation of small values](../images/log-plot01.png)
+
+
+### Log scale
+
+```{r log-scale02}
+a <- 3
+b <- 6
+log_plot02 <- log_plot00 + 
+    geom_segment(x=a, y=-4.1, xend=a, yend=log2(a)) +
+    geom_segment(x=b, y=-4.1, xend=b, yend=log2(b)) +
+    geom_segment(x=-0.3, y=log2(a), xend=a, yend=log2(a)) +
+    geom_segment(x=-0.3, y=log2(b), xend=b, yend=log2(b)) +
+    geom_text(x=a, y=-5, label=a, angle=90) +
+    geom_text(x=-1, y=log2(a), label=round(log2(a), 1)) +
+    geom_text(x=b, y=-5, label=b, angle=90) +
+    geom_text(x=-1, y=log2(b), label=round(log2(b), 1))
+ggsave("../images/log-plot02.png", log_plot02, width=4, height=4)
+```
+
+![Log transformation of large values](../images/log-plot02.png)
+
+
+### Log scale
+
 :::::: {.columns}
 ::: {.column}
 ![Original scatterplot](../images/scatter-filled.png)
@@ -318,6 +427,23 @@ faded_plot +
 
 </div>
 
+
+### Jittering
+
+:::::: {.columns}
+::: {.column}
+![Plot of bedrooms and price without jittering](../images/scatter-no-jitter.png)
+:::
+::: {.column}
+![Scatterplot with jittering](../images/scatter-jitter.png)
+:::
+::::::
+
+<div class="notes">
+
+
+
+</div>
 
 
 

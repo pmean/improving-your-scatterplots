@@ -75,3 +75,37 @@ proc sgplot
   xaxis type=log logbase=2 logstyle=logexpand;
   yaxis type=log logbase=2 logstyle=logexpand;
 run;
+
+ods graphics / imagename="scatter-no-jitter" imagefmt=png reset=index;
+proc sgplot
+    data=improve.saratoga;
+  scatter x=Bedrooms y=Price / 
+    transparency=0
+    markerattrs=(
+      symbol=CircleFilled 
+      size=15
+    );
+run;
+
+ods graphics / imagename="scatter-jitter" imagefmt=png reset=index;
+proc sgplot
+    data=improve.saratoga;
+  scatter x=Bedrooms y=Price / 
+    jitter
+    transparency=0
+    markerattrs=(
+      symbol=CircleFilled 
+      size=15
+    );
+run;
+
+ods graphics / imagename="scatter-color" imagefmt=png reset=index;
+proc sgplot
+    data=improve.saratoga;
+  scatter x=Size y=Price / 
+    colorresponse=Baths
+    markerattrs=(
+      symbol=CircleFilled 
+      size=5
+    );
+run;
