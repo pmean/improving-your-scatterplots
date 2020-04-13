@@ -4,7 +4,7 @@ author: "Steve Simon"
 output: powerpoint_presentation
 ---
 
-```{r setup}
+```{r setup, echo=FALSE}
 knitr::opts_chunk$set(echo=FALSE)
 suppressMessages(suppressWarnings(library(ggplot2)))
 ```
@@ -54,13 +54,11 @@ There are five general recommendations I want to make about scatterplots.
 
 I'm a big believer in software agnosticism, and this is something that I see in the presentations by The Analysis Factor. It is a mistake to teach as if there is only one good program for data visualization.
 
-If you are not sure what software package to use in this class, let me offer a few suggestions. First, your boss may have a strong opinion about what software that you should use. You can go to your boss and say "My teacher is a really smart guy who says that the _____ package in _____ is the best choice for data visualization." Try it and see what happens. Nothing, I suspect. One of the great tragedies in life is that the wise advice you get in this class carries very little weight in the real world.
+If you are not sure what software package to use in this class, let me offer a few suggestions. First, your boss may have a strong opinion about what software that you should use. If you make a choice that makes me happy and your boss mad, I won't be able to get you that promotion you've been hoping for.
 
 If your boss doesn't care, see what most of your co-workers are using. They may not be as smart as I am (put on a false air of pride here) but they are a lot closer to your cubicle when this workshop ends and you have to find a quick answer.
 
-There's also a comfort level here. Do you want a graphical user interface or a programming language. A graphical interface is great for getting work done quickly. A programming language is great for reproducibility and reusability. What fits your working style better? I don't know and it would be arrogant of me to make the presumption that I do know.
-
-One more consideration. Some of you in this class are "ringers." You already know visualization better than I do because you've been doing it for longer, with bigger and more complex data sets. You're just here to see if I know one or two things that you don't already know. If you're a ringer, take the challenge of learning a new software system. It will keep you from getting too bored when I talk about all these things that you already know better than I do.
+There's also a comfort level here. Do you want a graphical user interface or a programming language? A graphical interface is great for getting work done quickly. A programming language is great for reproducibility and reusability. What fits your working style better? I don't know and it would be arrogant of me to make the presumption that I do know.
 
 </div>
 
@@ -103,7 +101,7 @@ Read the paper for the full answer, but surprisingly, the pie chart turned out t
 
 </div>
 
-Hierarchy of perception
+### Hierarchy of perception
 
 + Visually simple tasks
   + Position
@@ -125,13 +123,47 @@ Hierarchy of perception
 
 ![](../images/btv_snow_average01.png)
 
+<div class="notes">
+
+This map uses color to show average yearly snowfall in Vermont and parts of New York. One question you might ask is how much does it snow in one Vermont city versus another.
+
+</div>
+
 ### Comparison of color
 
 ![](../images/btv_snow_average02.png)
 
+<div class="notes">
+
+I've magnified a northern part of the state to highlight St. Albans.
+
+</div>
+
 ### Comparison of color
 
 ![](../images/btv_snow_average03.png)
+
+<div class="notes">
+
+Here's a city in the southern part of the state, Bennington. Okay, keep those two states in mind, now.
+
+</div>
+
+### Comparison of color
+
+![](../images/btv_snow_average01.png)
+
+<div class="notes">
+
+Okay now, which city has a higher average yearly snowfall?
+
+How much more?
+
+Well the blue surrounding St. Albans looks to be a bit darker than the blue surrounding Bennington. So maybe it has more snow.
+
+Now that wasn't too hard, was it?
+
+</div>
 
 ### Vermont snowfall scatterplot
 
@@ -153,9 +185,30 @@ ggsave("../images/btv_snow_average04.png", vermont_barchart, width=6, height=3)
 
 I pulled some snowfall numbers from a different website, so this data is not perfectly consistent with the maps, but it is fairly close.
 
-Notice how much easier it is to pick out which city has more snowfall when you display it as a scatterplot. You are judging the relative position rather than the color.
+But notice how much easier that question becomes when you display the snowfalls as scatterplots?
 
-There are some questions, of course, that are still answered faster and more accurately with the map, such as whether the western edge of the state has more snowfall than the eastern edge.
+I've highlighted Bennington and St. Albans to make it a bit easier for you, but the answer is almost immediate because you are determining relative position versus shades of a color.
+
+Now there are some caveats here. The scatterplot doesn't help much is you live outside the twelve cities listed here. You also lose the ability to see a ridge of higher snowfall running right down the middle of the state. There's also a huge amount of snow in the parts of New York just east of Lake Ontario.
+
+So don't take this too literally, but in general some features of a graph lend themselves better to quicker and more accurate answers.
+
+</div>
+
+
+### Break #1
+
++ What have you learned so far
+  + Two quantifiable measures: speed and accuracy
+  + Hierarchy of perception
+    + Relative position is easy to judge
+    + Difference in color are harder to judge
++ What's coming next
+  + The five dimensions of a scatterplot
+  
+<div class="notes">
+
+Let's take a break here and see if there are any questions.
 
 </div>
 
@@ -174,12 +227,22 @@ library(ggplot2)
 plot_framework <- ggplot(
   sa, aes(Size, Price, shape=factor(Fireplace), color=Baths, size=Bedrooms)) +
   theme(legend.position="none") + 
-  expand_limits(x=c(0, 6), y=c(0, 1000))
+  expand_limits(x=c(0, 6), y=c(0, 1000)) +
+  xlab("Size of the house (thousands of square feet") +
+  ylab("Price of the house (thousands of dollars")
 kitchen_sink_plot <-  plot_framework + geom_point()
 ggsave("../images/kitchen-sink-plot.png", kitchen_sink_plot, height=4, width=4)
 ```
 
 ![](../images/kitchen-sink-plot.png)
+
+<div class="notes">
+
+Here's a plot that shows the five features that you have available in a scatterplot. This is not a plot format that I would recommend, just one that illustrates a basic concept.
+
+The dataset comes from a website called DASL which is short for Data And Story Library. It represents a survey of housing prices in Saratoga, New York. For each house sale, there is information about the house, such as square footaage, number of bedrooms, number of bathrooms, and whether the house has a fireplace.
+
+</div>
 
 ### Highlight two points
 
@@ -193,65 +256,132 @@ p2 <- 212
 pts <- (1:n) %in% c(p1, p2)
 sa$highlight <- ifelse(pts, 1, 0.06)
 faded_plot <- plot_framework + geom_point(alpha=sa$highlight)
-faded_plot
+ggsave("../images/faded-plot.png", faded_plot, width=4, height=4)
 ```
 
-### X position <- Square footage
+![Plot of snowfall in Vermont with two points highlighted](../images/faded-plot.png)
+
+<div class="notes">
+
+I want to highlight just two data points in this graph to show what the five dimensions are going to be.
+
+</div>
+
+### X dimension <- Square footage
 
 ```{r}
-faded_plot + 
-  geom_text(x=sa$Size[p1], y=0, label=sa$Size[p1], size=4, color="black") +
-  geom_text(x=sa$Size[p2], y=0, label=sa$Size[p2], size=4, color="black")
+x_dimension <- faded_plot + 
+  geom_text(x=sa$Size[p1], y=0, label=round(sa$Size[p1], 1), size=4, color="black") +
+  geom_text(x=sa$Size[p2], y=0, label=round(sa$Size[p2], 1), size=4, color="black")
+ggsave("../images/x-dimension.png", x_dimension, width=4, height=4)
 ```
 
-### Y position <- Price
+![Plot of snowfall in Vermont emphasizing X dimension](../images/x-dimension.png)
+
+<div class="notes">
+
+The X dimension shows the size in thousands of square feet for each house. The two houses hightlighted have 1,300 and 5,200 square feet.
+
+</div>
+
+### Y dimension <- Price
 
 ```{r}
-faded_plot + 
+y_dimension <- faded_plot + 
   geom_text(x=0.2, y=sa$Price[p1], label=round(sa$Price[p1]), size=4, color="black") +
   geom_text(x=0.2, y=sa$Price[p2], label=round(sa$Price[p2]), size=4, color="black")
+ggsave("../images/y-dimension.png", y_dimension, width=4, height=4)
 ```
 
-### Size <- Number of bedrooms
+![Plot of snowfall in Vermont emphasizing Y dimension](../images/y-dimension.png)
+
+<div class="notes">
+
+The Y dimension shows the price in thousands of dollars for each house. The two houses hightlighted have 1,300 and 5,200 square feet.
+
+</div>
+
+
+### Size dimension <- Number of bedrooms
 
 ```{r}
-faded_plot + 
+size_dimension <- faded_plot + 
   geom_text(x=sa$Size[p1], y=sa$Price[p1]+75, label=sa$Bedrooms[p1], size=3, color="black") +
   geom_text(x=sa$Size[p2], y=sa$Price[p2]+75, label=sa$Bedrooms[p2], size=5, color="black")
+ggsave("../images/size-dimension.png", size_dimension, width=4, height=4)
 ```
+
+![Plot of snowfall in Vermont emphasizing size dimension](../images/size-dimension.png)
+
+<div class="notes">
+
+The size of the data point is proportional to the number of bedrooms. The smaller of the two highlighted points is a house with three bedrooms. The larger is a house with four bedrooms.
+
+</div>
+
 
 ### Shape <- Fireplace indicator
 
 ```{r}
-faded_plot + 
+shape_dimension <- faded_plot + 
   geom_text(x=sa$Size[p1], y=sa$Price[p1]+75, label="No fireplace", size=4, color="black") +
   geom_text(x=sa$Size[p2], y=sa$Price[p2]+75, label="Fireplace", size=4, color="black")
+ggsave("../images/shape-dimension.png", shape_dimension, width=4, height=4)
 ```
+
+![Plot of snowfall in Vermont emphasizing shape dimension](../images/shape-dimension.png)
+
+<div class="notes">
+
+The shape of the point indicates whether the house has a fireplace. A triangle represents a house with a fireplace and a circle represents a house with one without a fireplace.
+
+</div>
 
 ### Color <- Number of bathrooms
 
 ```{r}
-faded_plot + 
+color_dimension <- faded_plot + 
   geom_text(x=sa$Size[p1], y=sa$Price[p1]+75, label=sa$Baths[p1], size=4, color=sa$Baths[p1]) +
   geom_text(x=sa$Size[p2], y=sa$Price[p2]+75, label=sa$Baths[p2], size=4, color=sa$Baths[p2])
+ggsave("../images/color-dimension.png", color_dimension, width=4, height=4)
 ```
 
-### X and Y position
-+ Biggest issue is overprinting
+![Plot of snowfall in Vermont emphasizing color dimension](../images/color-dimension.png)
+
+<div class="notes">
+
+The color of the data point indicats how many bathrooms a house has. The black data point indicates only one bathroom and the blue data point indicates four bathrooms.
+
+</div>
+
+### Break #2
+
++ What have you learned
+  + Five dimensions of a scatterplot (x, y, size, shape, and color)
++ What's coming up next
+  + Mitigating the problem of overprinting
+
+<div class="notes">
+
+Let me stop again and see if there are any questions.
+
+</div>
+
+### X and Y position, mitigating overprinting
 + Partial solutions
-  + Small size
   + Open symbols
+  + Small size
   + Log transformation
   + Opacity
   + Jittering
 
 <div class="notes">
 
-
+The biggest problem with many graphs is overprinting. So much data ends up producing a big black uninterpretable blob. There are several solutions that can help somewhat with overprinting.
 
 </div>
 
-### Open circles
+### Mitigating overprinting: use open symbols
 
 ```{r open}
 x0 <- c(12, 13, 14, 14) 
@@ -261,13 +391,22 @@ artificial_data <- data.frame(
   y=c(y0+10, y0+10)
 )
 lims <- c(10, 30)
-ggplot(artificial_data, aes(x, y)) +
+open_circles <- ggplot(artificial_data, aes(x, y)) +
   theme_void() +
   expand_limits(x=lims, y=lims) +
   geom_point(size=20, shape=rep(c(16, 1), each=4))
+ggsave("../images/open-circles.png", open_circles)
 ```
 
-### Open circles
+![Comparison of solid versus open circles](../images/open-circles.png)
+
+<div class="notes">
+
+If you look at the figure to the left, it looks like it might be three or maybe four data points all clustered together. There is a bit of an indentation in the southeast corner of this blog that gives a hint that it is really four rather than three data points. The figure on the right uses open circles and you can tell much faster that there are indeed four data points.
+
+</div>
+
+### Mitigating overprinting: use open symbols
 
 :::::: {.columns}
 ::: {.column}
@@ -280,11 +419,11 @@ ggplot(artificial_data, aes(x, y)) +
 
 <div class="notes">
 
-
+Here's what open circles do to a scatter plot of square footage versus price. It only helps a little, but you can start to see the difference between regions that have a moderate amount of data versus a much larger amount of data.
 
 </div>
 
-### Small size
+### Mitigating overprinting: Use small size points
 
 ```{r small-size}
 x0 <- c(12, 13, 14, 14) 
@@ -294,13 +433,23 @@ artificial_data <- data.frame(
   y=c(y0+10, y0+10)
 )
 lims <- c(10, 30)
-ggplot(artificial_data, aes(x, y)) +
+small_size <- ggplot(artificial_data, aes(x, y)) +
   theme_void() +
   expand_limits(x=lims, y=lims) +
   geom_point(shape=16, size=rep(c(20, 7), each=4))
+ggsave("../images/small-size.png", small_size, width=4, height=4)
 ```
 
-### Small size
+![A cluster of four data points comparing larger versus small](../images/small_size.png)
+
+<div class="notes">
+
+If you use smaller data points, you will be able to separate out the four indvidual data points in this cluster. There are disadvantages to smaller data points. They sometimes make it easier for you to ignore outliers. They also cause problems when you want to use different shapes, as the shapes become less distinguishable for smaller sizes. But they work well for mitigating overprinting.
+
+</div>
+
+
+### Mitigating overprinting: use smaller size points
 
 :::::: {.columns}
 ::: {.column}
@@ -448,8 +597,14 @@ ggsave("../images/log-plot02.png", log_plot02, width=4, height=4)
 ### Symbols
 
 ```{r too-many-symbols}
-ggplot(sa, aes(Size, Price, shape=factor(Bedrooms))) + geom_point()
+too_many_symbols <- 
+  ggplot(sa, aes(Size, Price, shape=factor(Bedrooms))) + 
+  scale_shape_manual(values = 0:6) +
+  geom_point()
+ggsave("../images/too-many-symbols.png", too_many_symbols, width=4, height=4)
 ```
+
+![Plot with seven different symbols](../images/too-many-symbols.png)
 
 <div class="notes">
 
@@ -468,6 +623,38 @@ ggplot(sa, aes(Size, Price, shape=FourPlusBedrooms)) +
   scale_shape_manual(values = c(4, 1))
 ```
 
+### Problem with open and closed symbols together
+
+```{r open-and-closed}
+open_closed01 <- 
+  ggplot(sa, aes(Size, Price, shape=factor(Fireplace))) + 
+  scale_shape_manual(values = c(1, 16)) +
+  geom_point()
+ggsave("../images/open-closed01.png", open_closed01, width=4, height=4)
+open_closed02 <- 
+  ggplot(sa, aes(Size, Price, shape=factor(Fireplace))) + 
+  scale_shape_manual(values = c(16, 1)) +
+  geom_point()
+ggsave("../images/open-closed02.png", open_closed02, width=4, height=4)
+```
+
+:::::: {.columns}
+::: {.column}
+![Plot showing open and closed circles](../images/open-closed01.png)
+:::
+::: {.column}
+![Plot showing closed and open circles](../images/open-closed02.png)
+:::
+::::::
+
+<div class="notes">
+
+In a fight between open and closed symbols, the closed symbols always win.
+
+</div>
+
+
+
 ### Symbols
 
 ```{r symbol-text}
@@ -481,6 +668,29 @@ ggplot(sa, aes(Size, Price, label=Bedrooms)) +
 ggplot(sa, aes(Size, Price, size=Bedrooms)) + 
   geom_point(shape=1)
 ```
+
+### Size
++ Never for a categorical variable
++ Propotional to
+  + Diameter?
+  + Perimeter?
+  + Area?
+
+<div class="notes">
+
+
+
+</div>
+
+### Size and shape don't mix
+
+```{r size-and-shape}
+ggplot(sa, aes(Size, Price, size=Bedrooms, shape=factor(Fireplace))) + 
+  scale_shape_manual(values = c(4, 1)) +
+  geom_point()
+```
+
+
 
 ### Colors, Everything I know about colors, I learned in Kindergarten.
 
@@ -583,7 +793,51 @@ Green plus blue gives you #00FFFF, which is cyan, a greenish blue color.
 
 </div>
 
+### Basic colors have different luminance
 
+```{r unequal-luminance}
+x <- rep(0:9, each=10)
+y <- rep(0:9, 10)
+co <- ifelse(x < 4.5, "#0000FF", "#FFFF00")
+unequal_luminance <- 
+  ggplot(data.frame(x, y), aes(x, y)) + 
+  theme_void() +
+  geom_point(color=co, size=22, shape="square") +
+  geom_point(x=2, y=5, color="#808080", size=22) +
+  geom_point(x=7, y=5, color="#808080", size=22) 
+ggsave("../images/unequal-luminance.png", unequal_luminance)
+```
+
+![Gray dot on blue and yellow backgrounds](../images/unequal-luminance.png)
+
+<div class="notes">
+
+Among the basic colors, yellow is an outlier. It has a much higher luminance. meaning that at the same level of brightness on your computer monitor, it stimulates your optic nerves more than other colors.
+
+This can lead to trouble. Notice the two gray dots shown on two different backgrounds. The gray in both cases is exactly halfway between black and white, but it appears darker when contrasted with yellow, because yellow has so much luminance.
+
+</div>
+
+### Colors cause optical illusions
+
+```{r equalize-luminance}
+co <- ifelse(x < 4.5, "#DDDDFF", "#FFFF00")
+ggplot(data.frame(x, y), aes(x, y)) + 
+  theme_void() +
+  geom_point(color=co, size=22, shape="square") +
+  geom_point(x=2, y=5, color="#808080", size=22) +
+  geom_point(x=7, y=5, color="#808080", size=22) 
+```
+
+<div class="notes">
+
+You can fix this by making blue lighter (closer to white).
+
+Higher luminance colors tend to dominate a graphic image. You should try to use colors of roughly equal luminance to avoid this.
+
+If you mix colors of different luminance, you will create artefacts that are unrelated to your data. The higher luminance colors will either tend to unfairly dominate the picture, or they will fade into the backgound and be lost.
+
+</div>
 
 ### Color
 
@@ -664,33 +918,51 @@ When you use a bit of restraint and only show two colors, you make the process o
 
 ### Discrete colors
 
-```{r discrete-colors}
+```{r discrete-colors, eval=FALSE}
 library(RColorBrewer)
-discrete_palette <- display.brewer.pal(8, "Dark2")
-ggsave("../images/discrete-palette.png", discrete_palette, width=4, height=4)
+display.brewer.pal(9, "Dark2")
 ```
 
-![](../images/discrete_palette.png)
+![Discrete color choices from RColorBrewer](../images/discrete-colors.png)
+
+<div class="notes">
+
+This is a nice set of colors. Each color is distinct from each other color and they are all roughly the same level of luminance. This makes the most sense for categorical data.
+
+</div>
 
 ### Simple gradient
 
-```{r simple-gradient}
+```{r simple-gradient, eval=FALSE}
 library(RColorBrewer)
-simple_gradient <- display.brewer.pal(9, "Greens")
-ggsave("../images/simple-gradient.png", simple_gradient, width=4, height=4)
+display.brewer.pal(9, "Greens")
 ```
 
-![](../images/simple-gradient.png)
+![Simple gradient from RColorBrewer](../images/simple-gradient.png)
 
-### Discrete colors
 
-```{r diverging-gradient}
-library(RColorBrewer)
-diverging_gradient <- display.brewer.pal(9, "RdYlGn")
-ggsave("../images/diverging-gradient.png", diverging_gradient, width=4, height=4)
+<div class="notes">
+
+A simple gradient transitions within a single color, usually from lighter shades of that color to darker shades.
+
+Depending on the nature of your plot, one end of the gradient will be emphasized and one end will be de-emphasized.
+
+</div>
+
+### Diverging gradient
+
+```{r diverging-gradient, eval=FALSE}
+display.brewer.pal(9, "RdYlGn")
 ```
 
-![](../images/diverging-gradient.png)
+![Diverging gradient from RColorBrewer](../images/diverging-gradient.png)
+
+<div class="notes">
+
+A diverging gradient moves between two distinct colors and takes a side trip in the middle to a third color. Typically, the middle color in a diverging gradient has a much higher luminence or a much lower luminence than the two extremes and is intended to fade into the background. The diverging gradient tends to emphasize the extremes and de-emphasize the middle.
+
+</div>
+
 
 
 ### Recommended books
@@ -699,7 +971,41 @@ ggsave("../images/diverging-gradient.png", diverging_gradient, width=4, height=4
 
 <div class="notes">
 
-Edward Tufte is a very interesting person.
+Edward Tufte is a very interesting person. Very opinionated, and right most of the time. When his book suffers, it is from an attention to a guiding principle that is so rigid that it misses out on the times when there are exceptions to every principle. This is not the book to start with, but one that you should read after you've been doing visualization for a while. It will help you develop an eye for what works and what doesn't work.
+
+</div>
+
+### Recommended books
+
+![Book cover of Visualizing Data](../images/cleveland-bookcover.jpg)
+
+### Recommended books
+
+![Book cover of Visual Revelations](../images/wainer-bookcover.jpg)
+
+<div class="notes">
+
+I learned more from this book than any other. It might be a bit dated today, but it helps you understand why a graph works from the underlying issues of the psychology of perception. This is also a good book to read if you want to see some of the pioneering changes that were made in data visualization just before the turn of the century. If you are just starting out in data visualization, this is not going to be your first book.
+
+</div>
+
+### Recommended books
+
+![Book cover of Creating More Effective Graphs](../images/robbins-bookcover.jpg)
+
+<div class="notes">
+
+While the previous two books were more theoretical, this book is very applied and is an excellent starter book for anyone wanting to learn more about data visualization.
+
+</div>
+
+### Recommended books
+
+![Book cover of Creating More Effective Graphs](../images/few-bookcover.jpg)
+
+<div class="notes">
+
+This is another very applied book. Both are equally good, but Robbins book seems a bit friendlier to me.
 
 </div>
 
