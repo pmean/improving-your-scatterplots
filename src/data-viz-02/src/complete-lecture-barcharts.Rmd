@@ -1,0 +1,53 @@
+---
+title: "Data visualization, Barcharts"
+author: "Steve Simon"
+output: powerpoint_presentation
+date: "Created: 2019-08-24"
+---
+
+### Barcharts, Outline
++ Preparation
++ Group exercises
++ Colors
++ Perception
++ Barchart fundamentals
++ Barchart recommendations
+
+<div class="notes">
+
+Here is an outline of what you will learn today.
+
+</div>
+
+```{r child="../component/preparation.Rmd"}
+```
+
+```{r child="../component/newspaper-graphs.Rmd"}
+```
+
+```{r child="../../common-files/src/exercise-message.Rmd"}
+```
+
+```{r  child="../component/tutorial-colors.Rmd"}
+```
+
+```{r child="../component/tutorial-perception.Rmd"}
+```
+
+```{r child="../component/fundamentals.Rmd"}
+```
+
+```{r child="../component/recommendations-barcharts.Rmd"}
+```
+
+```{r child="../component/recommendations-colors.Rmd"}
+```
+
+```{r child="../component/recommendations-perception.Rmd"}
+```
+
+```{r child="../../common-files/src/exercise-aesthetics.Rmd"}
+```
+
+```{r child="../component/exercise-titanic.Rmd"}
+```

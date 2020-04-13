@@ -1,0 +1,18 @@
+---
+title: "Exercise, Scotus"
+author: "Steve Simon"
+date: "Created: 2019-08-25"
+output: powerpoint_presentation
+---
+
+```{r child="../../common-files/src/component-header.Rmd"}
+```
+
+```{r}
+# load("../../common-files/data/scotus.RData")
+```
+
+### Barcharts, On your own
+
+((Describe some possible analyses using the scotus data set.))
+

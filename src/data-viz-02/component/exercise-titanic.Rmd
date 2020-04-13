@@ -1,0 +1,18 @@
+---
+title: "Exercise, Titanic"
+author: "Steve Simon"
+date: "Created: 2019-09-22"
+output: powerpoint_presentation
+---
+
+```{r child="../../common-files/src/component-header.Rmd"}
+```
+
+```{r}
+# load("../../common-files/data/scotus.RData")
+```
+
+### Barcharts, On your own
+
++ While the Titanic sailed during an era of women and children first, it also sailed in an era where class distinctions were important. This shows in the mortality statistics for each passenger class. Show this using a bar chart and include information about gender and mortality as well.
+

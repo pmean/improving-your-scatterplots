@@ -1,0 +1,5 @@
+This image was found at a website
+
+Altair Developers. (n.d.). Trellis Stacked Bar Chart — Altair 3.1.0 documentation. Retrieved June 24, 2019, from https://altair-viz.github.io/gallery/trellis_stacked_bar_chart.html
+
+It is being used here under the Fair Use provisions of copyright law. Your use of this image may or may not fall under the Fair Use provisions.

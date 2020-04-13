@@ -1,0 +1,57 @@
+---
+title: "Barcharts, quiz"
+author: "Steve Simon"
+output: powerpoint_presentation
+---
+
+### Quick quiz (1 of 4)
+What aeshtetic does not apply to a bar chart? (choose the best answer)
+1. Size
+2. Shape
+3. Color
+
+<div class="notes">
+
+Answer: 2 (shape)
+
+</div>
+
+### Quick quiz (2 of 4)
+The gap between bars in a bar chart should be (choose the best answer)
+
+1. Zero
+2. Smaller than the width of the bars
+3. Equal to the width of the bars
+
+<div class="notes">
+
+Answer: 2 (smaller than the width of the bars), but I would not criticize the answer of 1 (Zero).
+
+</div>
+
+### Quick quiz (3 of 4)
+The height of the bars in a bar chart can represent (choose all that apply)
+
+1. An average
+2. A count
+3. A percentage
+4. A total
+
+
+<div class="notes">
+
+Answer: 1, 2, 3, and 4.
+
+</div>
+
+### Quick quiz (4 of 4)
+The "dodge" option for bar charts will place the bars (choose the best answer)
+
+1. side by side
+2. stacked one above the other
+
+<div class="notes">
+
+Answer: 1 (side by side)
+
+</div>

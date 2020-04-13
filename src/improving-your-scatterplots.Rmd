@@ -445,6 +445,252 @@ ggsave("../images/log-plot02.png", log_plot02, width=4, height=4)
 
 </div>
 
+### Symbols
+
+```{r too-many-symbols}
+ggplot(sa, aes(Size, Price, shape=factor(Bedrooms))) + geom_point()
+```
+
+<div class="notes">
+
+This plot has two problems. First, it uses too many symbols. It turns the graph into a kind of puzzle where you are constantly going back and forth between the legend and the graph itself because no one can remember what all seven of the symbols represent.
+
+The second problem is that number of bedrooms is not categorical. You want the greatest distinction to be between 1 bedrooms and 7 bedrooms and differences smaller than that should have proportionately less distinction.
+
+</div>
+
+### Symbols
+
+```{r symbol-choices}
+sa$FourPlusBedrooms <- ifelse(sa$Bedrooms>=4, "4+ BR", "1-3 BR")
+ggplot(sa, aes(Size, Price, shape=FourPlusBedrooms)) + 
+  geom_point() +
+  scale_shape_manual(values = c(4, 1))
+```
+
+### Symbols
+
+```{r symbol-text}
+ggplot(sa, aes(Size, Price, label=Bedrooms)) + 
+  geom_text()
+```
+
+### Size
+
+```{r size-bedrooms}
+ggplot(sa, aes(Size, Price, size=Bedrooms)) + 
+  geom_point(shape=1)
+```
+
+### Colors, Everything I know about colors, I learned in Kindergarten.
+
+![](../images/julias-colour-wheel1.jpg)
+
+<div class="notes">
+
+It was probably in Kindergarten where you learned the basic way to combine primary colors. Yellow plus red equals orange, Yellow plus blue equals green. Red plus blue equals purple/violet.
+
+It doesn't work that way on a computer screen because screens use light to create colors and lights blend in different ways than paints or crayons.
+
+Before you tackle ths computer system for colors, you need to review binary and hexadecimal number systems.
+
+</div>
+
+### Colors, Codes for colors
++ #rrggbb format
+  + #000000 is pure black
+  + #FFFFFF is pure white
+  + #FF0000 is pure red
+  + #00FF00 is pure green
+  + #0000FF is pure blue
++ You can mix and match to get 16,777,216 colors
+  + #800080 is purple, #FF69B4 is pink, #40E0D0 is turquoise
+  
+<div class="notes">
+
+The RGB format uses six hexadecimal digits to represent colors. A hexidecimal of all zeros is pure black and at the other extreme, a hexidecimal of all F's is pure white. 
+
+The first two hexidecimal digits represent the red channel. The highest value FF for the red channel combined with zeros for the other two channels (#FF0000) equals pure red. 
+
+The next two digits represent the green channel. #00FF00, giving the maximum to the green channel and the minimum to the other two channels produces a pure green. 
+
+The last two digits represent the blue channel, and #0000FF represents pure blue.
+
+You can combine these in a variety of ways. You end up with an almost unlimited number of colors. Six hexadecimal digits allow you to produce 16^6 or 16,777,216 different colors.
+
+</div>
+
+### Colors, Red plus green equals yellow
+
+```{r red-plus-green}
+add_colors <- function(c1, c2, c3) {
+  df <- data.frame(
+    x=rep(2, 3),
+    y=3:1,
+    b=c(c1, c2, c3)
+  )
+  ggplot(df, aes(x, y)) +
+    geom_text(color=df$b, size=18, label=df$b) +
+    expand_limits(x=c(0, 4), y=c(0, 4)) +
+    geom_text(x=0.25, y=2, label="+", size=18) +
+    geom_segment(x=0.75, y=1.5, xend=3.25, yend=1.5, size=3) +
+    theme_void() +
+    theme(
+      panel.background=element_rect(fill="#808080"))
+}
+red_plus_green <- add_colors("#FF0000", "#00FF00", "#FFFF00")
+ggsave("../images/red-plus-green.png", red_plus_green, width=4, height=4)
+```
+
+![](../images/red-plus-green.png)
+
+<div class="notes">
+
+Whne you combine colors in the RGB system, they become lighter in color. So if you add red light (FF in the red channel) to green light (FF in the green chanel), you get yellow, which is FF in both the red and green channels.
+
+</div>
+
+### Colors, Red plus blue equals magenta
+
+```{r red-plus-blue}
+a3 <- c("#FF0000", "#FF0000", "#00FF00")
+b3 <- c("#00FF00", "#0000FF", "#0000FF")
+c3 <- c("#FFFF00", "#FF00FF", "#00FFFF")
+red_plus_blue <- add_colors("#FF0000", "#0000FF", "#FF00FF")
+ggsave("../images/red-plus-blue.png", red_plus_blue, width=4, height=4)
+```
+
+![](../images/red-plus-blue.png)
+
+<div class="notes">
+
+Red plus blue gives you #FF00FF, which is magenta, a light purplish red.
+
+</div>
+
+### Colors, Green plus blue equals cyan
+
+```{r green-plus-blue}
+green_plus_blue <- add_colors("#00FF00", "#0000FF", "#00FFFF")
+ggsave("../images/green-plus-blue.png", green_plus_blue, width=4, height=4)
+```
+
+![](../images/green-plus-blue.png)
+
+<div class="notes">
+
+Green plus blue gives you #00FFFF, which is cyan, a greenish blue color.
+
+</div>
+
+
+
+### Color
+
+![Image of man wearing three bold colors](../images/fashion-mistake.png)
+
+<div class="notes">
+
+It's a well known fasion mistake to wear too many colors at the same time. Maybe this guy could get away with it, but most of us would look like idiots if we tried to dress that way.
+
+There's a similar lesson for data visualization.
+
+</div>
+
+### Recommendations, Don't overuse colors.
+
+![Text with a variety of colors](../images/too-many-colors.png)
+
+<div class="notes">
+
+Naomi Robbins, an expert on data visualization, made an interesting observation. You would never make each word in a sentence a different color. So why would you make every bar, every point, and every line a different color?
+
+Too many colors dilutes the impact that color can have.
+
+You can use a second color to add emphasis. Or maybe a gradient between two different colors could work. Doing more than this is usually a big mistake.
+
+</div>
+
+### Count the fives
+
+```{r count-nine-colors}
+set.seed(123547)
+n <- 30
+x <- runif(n)
+y <- runif(n)
+z <- factor(1+floor(9*runif(n)))
+df <- data.frame(x, y, z)
+count_fives01 <- ggplot(df, aes(x, y, color=z)) +
+  geom_text(label=z, size=6) +
+  theme(legend.position="none")
+ggsave("../images/count-fives01.png", count_fives01, width=4, height=4)
+```
+
+![](../images/count-fives01.png)
+
+<div class="notes">
+
+Here's an exercise that adapted from Olson and Bergen.
+
+How many fives are there in this picture. I've used a different color for each number to make it easier for you to pick out any particular number. It takes a while, but you can see that there are three 5's, clustered in the lower right corner of the graph.
+
+Did the colors help? Well, not all that much. It is hard to pick out nine colors and not have a few of them look very similar. In particular, the 5's and the 6's are pretty close, as are the 8's and the 9's.
+
+</div>
+
+### Count the fives
+
+```{r count-two-colors}
+set.seed(123547)
+n <- 30
+x <- runif(n)
+y <- runif(n)
+z <- factor(1+floor(9*runif(n)))
+df <- data.frame(x, y, z)
+co <- ifelse(z==5, "red", "black")
+count_fives02 <- ggplot(df, aes(x, y)) +
+  geom_text(label=z, size=6, color=co) +
+  theme(legend.position="none")
+ggsave("../images/count-fives02.png", count_fives02, width=4, height=4)
+```
+
+![](../images/count-fives02.png)
+
+<div class="notes">
+
+When you use a bit of restraint and only show two colors, you make the process of identifying all the fives much easier.
+
+</div>
+
+### Discrete colors
+
+```{r discrete-colors}
+library(RColorBrewer)
+discrete_palette <- display.brewer.pal(8, "Dark2")
+ggsave("../images/discrete-palette.png", discrete_palette, width=4, height=4)
+```
+
+![](../images/discrete_palette.png)
+
+### Simple gradient
+
+```{r simple-gradient}
+library(RColorBrewer)
+simple_gradient <- display.brewer.pal(9, "Greens")
+ggsave("../images/simple-gradient.png", simple_gradient, width=4, height=4)
+```
+
+![](../images/simple-gradient.png)
+
+### Discrete colors
+
+```{r diverging-gradient}
+library(RColorBrewer)
+diverging_gradient <- display.brewer.pal(9, "RdYlGn")
+ggsave("../images/diverging-gradient.png", diverging_gradient, width=4, height=4)
+```
+
+![](../images/diverging-gradient.png)
 
 
 ### Recommended books

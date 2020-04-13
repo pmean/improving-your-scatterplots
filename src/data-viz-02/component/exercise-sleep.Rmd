@@ -1,0 +1,38 @@
+---
+title: "Barplots, Final exercise, Using the sleep data set"
+author: "Steve Simon"
+output: powerpoint_presentation
+---
+
+### Advanced exercise
+
++ There is a second data set on sleep in 
+mammals. You can find a brief description of
+this data set at
+  + http://www.statsci.org/data/general/sleep.html
++ You can download the actual data at
+  + http://www.statsci.org/data/general/sleep.txt
+
+<div class="notes">
+
+Continue your work on this data set. Review the description of each variable on the website shown here.
+
+</div>
+
+### Advanced exercise
++ Update your visualization. 
+  + Apply some of the new methods and recommendations
++ Examine interrelationships
+  + gestation, lifespan
+  + predation, bodywt,
+  + exposure, totalsleep
++ Divide the work among different group members
+
+<div class="notes">
+
+For a final assignment in this section, take the same data set on sleep in mammals. Rework and update your visualizations. Use some of the principles and recommendations presented in this section. Compare bar charts to the scatterplots that you used earlier. Which works better?
+
+You can examine any interrelationships, but three possible areas for exploration are the relationships between gestation and lifespan, predation and bodywt, and exposure and totalsleep. Feel free to incorporare an additional variable of interest in your visualization that you feel might be relevant.
+
+</div>
+

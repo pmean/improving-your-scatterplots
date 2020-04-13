@@ -1,0 +1,133 @@
+---
+title: "Exercise, first-class-red"
+author: "Steve Simon"
+date: "2019-08-03"
+output: powerpoint_presentation
+---
+
+```{r child="../../common-files/src/component-header.Rmd"}
+```
+
+```{r}
+load("../../common-files/data/titanic.RData")
+```
+
+### Exercise, First class red
++ Make the first class bar red (#FF0000)
++ Make the other two bars gray (#808080)
+
+<div class="notes">
+
+One way to emphasize a particular category is to make it a bright color and to set the other colors to a less prominent color like gray that lets them fade into the background. It's okay to use the same color for more than one category.
+
+Make the first class category red and set the second and third class categories to gray.
+
+</div>
+
+### Exercise, Python code
++ Here's the Python code
+```{}
+ch = alt.Chart(df).mark_bar().encode(
+    alt.Color(
+        'pclass:N',
+        scale=alt.Scale(
+            range=['#FF0000', '#808080', '#808080']
+        )
+    ), 
+    x='pclass:N',
+    y='count()'
+)
+```
+
+<div class="notes">
+
+Here is the Python code. You modify the colors with the Scale function.
+
+</div>
+
+### Exercise, Python output
+```{python}
+import pandas as pd
+import altair as alt
+df = pd.read_csv("../../common-files/data/titanic3.csv")
+ch = alt.Chart(df).mark_bar().encode(
+    alt.Color(
+        'pclass:N',
+        scale=alt.Scale(
+            range=['#FF0000', '#808080', '#808080']
+        )
+    ), 
+    x='pclass:N',
+    y='count()'
+)
+ch.save("../images/python/red-first-class.html")
+```
+
+![Bar chart with red accent color](../images/python/red-first-class.png)
+
+<div class="notes">
+
+Here is the Python output.
+
+</div>
+  
+
+### Exercise, R code
++ Here's the R code
+```
+ggplot(titanic, aes(x=pclass)) +
+  geom_bar(aes(fill=pclass)) +
+  scale_fill_manual(values=c("#FF0000", "#808080", "#808080"))
+```
+
+<div class="notes">
+
+Here is the R code. The scale_fill_manual function allows you to specify your colors.
+
+</div>
+
+### Exercise, R output
+
+```{r bar-color-repeat}
+load("../../common-files/data/titanic.RData")
+initiate_image()
+ggplot(titanic, aes(x=pclass)) +
+  geom_bar(aes(fill=factor(pclass))) +
+  scale_fill_manual(values=c("#FF0000", "#808080", "#808080"))
+finalize_image("Barchart with red highlight")
+```
+
+`r display_image`
+
+<div class="notes">
+
+Here is the graph in R.
+
+</div>
+
+### Exercise, Tableau steps
++ Drag PClass to  Columns and Rows
+  + Change the PClass in Columns to Dimension, Discrete (blue pill)
+  + Change the PClass in Rows to Summary, Count
++ Drag PClass to the Color button
++ Click on PClass 1
+  + Then click on the upper right pen icon
+  + Click on the color button
+  + Choose a different color
++ Repeat for PClass 2 and PClass 3
+
+<div class="notes">
+
+Here are the steps in Tableau. The tricky part is selecting just a single passenger class. It use the pen icon in the upper right corner.
+
+</div>
+
+### Exercise, Tableau output
+
+![Barchart with red highlight](../images/tableau/red-first-class.png)
+
+<div class="notes">
+
+Here is the Tableau output.
+
+</div>
