@@ -43,6 +43,25 @@ There are five general recommendations I want to make about scatterplots.
 
 </div>
 
+### What software should you use?
+
++ Use the software you like best
++ What does your boss use?
++ What do your co-workers use?
++ What software are you most comfortable with?
+  
+<div class="notes">
+
+I'm a big believer in software agnosticism, and this is something that I see in the presentations by The Analysis Factor. It is a mistake to teach as if there is only one good program for data visualization.
+
+If you are not sure what software package to use in this class, let me offer a few suggestions. First, your boss may have a strong opinion about what software that you should use. If you make a choice that makes me happy and your boss mad, I won't be able to get you that promotion you've been hoping for.
+
+If your boss doesn't care, see what most of your co-workers are using. They may not be as smart as I am (put on a false air of pride here) but they are a lot closer to your cubicle when this workshop ends and you have to find a quick answer.
+
+There's also a comfort level here. Do you want a graphical user interface or a programming language? A graphical interface is great for getting work done quickly. A programming language is great for reproducibility and reusability. What fits your working style better? I don't know and it would be arrogant of me to make the presumption that I do know.
+
+</div>
+
 ### General principles
 
 + Two quantifiable criteria for an effective graph
@@ -56,8 +75,6 @@ Everybody has opinions, but data trumps all. If you want to demonstrate empirica
 First, how quickly can a viewer answer a question about the graph?
 
 Second, how accurately can a viewer answer a question about the graph?
-
-This second point is particularly important. Your graph is not a puzzle that challenges your reader to stare long and hard to find the hidden patterns. If a reader looks at your graph and does not immediately undestand the message that you are trying to convey with this graph, then you should go back to the drawing board. 
 
 </div>
 
@@ -84,10 +101,108 @@ Read the paper for the full answer, but surprisingly, the pie chart turned out t
 
 </div>
 
+### Hierarchy of perception
+
++ Visually simple tasks
+  + Position
+  + Length
++ Moderately difficult tasks
+  + Angle/slope
+  + Area
++ Very difficult tasks
+  + Volume
+  + Density/Saturation/Hue
+
+<div class="notes">
+
+
+
+</div>
+
+### Comparison of color
+
+![](../images/btv_snow_average01.png)
+
+<div class="notes">
+
+This map uses color to show average yearly snowfall in Vermont and parts of New York. One question you might ask is how much does it snow in one Vermont city versus another.
+
+</div>
+
+### Comparison of color
+
+![](../images/btv_snow_average02.png)
+
+<div class="notes">
+
+I've magnified a northern part of the state to highlight St. Albans.
+
+</div>
+
+### Comparison of color
+
+![](../images/btv_snow_average03.png)
+
+<div class="notes">
+
+Here's a city in the southern part of the state, Bennington. Okay, keep those two states in mind, now.
+
+</div>
+
+### Comparison of color
+
+![](../images/btv_snow_average01.png)
+
+<div class="notes">
+
+Okay now, which city has a higher average yearly snowfall?
+
+How much more?
+
+Well the blue surrounding St. Albans looks to be a bit darker than the blue surrounding Bennington. So maybe it has more snow.
+
+Now that wasn't too hard, was it?
+
+</div>
+
+### Vermont snowfall scatterplot
+
+```{r vt-read}
+vt <- read.table("../data/vermont-cities-snowfall.txt")
+names(vt) <- c("Snowfall", "City")
+color_codes <- c("red", rep("black", 5), "red", rep("black", 6))
+vermont_barchart <- ggplot(vt, aes(Snowfall, City)) + 
+  geom_point(color=color_codes) + 
+  expand_limits(x=0) +
+  ylab(" ") +
+  xlab("Yearly snowfall in inches")
+ggsave("../images/btv_snow_average04.png", vermont_barchart, width=6, height=3)
+```
+
+![Bar chart of yearly snowfalls in Vermont](../images/btv_snow_average04.png)
+
+<div class="notes">
+
+I pulled some snowfall numbers from a different website, so this data is not perfectly consistent with the maps, but it is fairly close.
+
+But notice how much easier that question becomes when you display the snowfalls as scatterplots?
+
+I've highlighted Bennington and St. Albans to make it a bit easier for you, but the answer is almost immediate because you are determining relative position versus shades of a color.
+
+Now there are some caveats here. The scatterplot doesn't help much is you live outside the twelve cities listed here. You also lose the ability to see a ridge of higher snowfall running right down the middle of the state. There's also a huge amount of snow in the parts of New York just east of Lake Ontario.
+
+So don't take this too literally, but in general some features of a graph lend themselves better to quicker and more accurate answers.
+
+</div>
+
+
 ### Break #1
 
 + What have you learned so far
   + Two quantifiable measures: speed and accuracy
+  + Hierarchy of perception
+    + Relative position is easy to judge
+    + Difference in color are harder to judge
 + What's coming next
   + The five dimensions of a scatterplot
   
@@ -182,7 +297,7 @@ ggsave("../images/y-dimension.png", y_dimension, width=4, height=4)
 
 <div class="notes">
 
-The Y dimension shows the price in thousands of dollars for each house. The two houses sold for 326 thousand dollars and 563 thousand dollars.
+The Y dimension shows the price in thousands of dollars for each house. The two houses hightlighted have 1,300 and 5,200 square feet.
 
 </div>
 
@@ -218,7 +333,7 @@ ggsave("../images/shape-dimension.png", shape_dimension, width=4, height=4)
 
 <div class="notes">
 
-The shape of the mark indicates whether the house has a fireplace. A triangle represents a house with a fireplace and a circle represents a house without a fireplace.
+The shape of the mark indicates whether the house has a fireplace. A triangle represents a house with a fireplace and a circle represents a house with one without a fireplace.
 
 </div>
 
@@ -252,7 +367,7 @@ Let me stop again and see if there are any questions.
 
 </div>
 
-### Mitigating overprinting
+### X and Y position, mitigating overprinting
 + Partial solutions
   + Open symbols
   + Small size
@@ -266,7 +381,7 @@ The biggest problem with many graphs is overprinting. So much data ends up produ
 
 </div>
 
-### Mitigating overprinting: Open symbols
+### Mitigating overprinting: use open symbols
 
 ```{r open}
 x0 <- c(12, 13, 14, 14) 
@@ -291,7 +406,7 @@ If you look at the figure to the left, it looks like it might be three or maybe 
 
 </div>
 
-### Mitigating overprinting: Open symbols
+### Mitigating overprinting: use open symbols
 
 :::::: {.columns}
 ::: {.column}
@@ -308,7 +423,7 @@ Here's what open circles do to a scatter plot of square footage versus price. It
 
 </div>
 
-### Mitigating overprinting: Small size marks
+### Mitigating overprinting: Use small size marks
 
 ```{r small-size}
 x0 <- c(12, 13, 14, 14) 
@@ -334,7 +449,7 @@ If you use smaller data marks, you will be able to separate out the four indvidu
 </div>
 
 
-### Mitigating overprinting: Small size marks
+### Mitigating overprinting: use smaller size marks
 
 :::::: {.columns}
 ::: {.column}
@@ -373,16 +488,6 @@ ggsave("../images/transparent-marks.png", transparent_marks, width=4, height=4)
 
 ![A cluster of four data marks varying the opacity](../images/transparent-marks.png)
 
-<div class="notes">
-
-Opacity is the degree to which you can see through a data mark to whatever is behind it. Opacity is sometimes referred to as transparency. It is usually a number between 0 and 1 with an opacity of 1 or a transaparency of 0 representing totally opaque or no transparency.
-
-A data mark with partial opacity appears lighter than a fully opaque data mark because you can see through it to the white background. When two points with partial opacity overlap, however, the area of overlap appears less transparent or more opaque. This usually means that the overlap is darker.
-
-Notice with the partial opacity data points to the right that you can identify overlapping areas, which helps you to quickly identify that there are four data points in this cluster.
-
-</div>
-
 ### Mitigating overprinting: Opacity
 
 :::::: {.columns}
@@ -396,7 +501,7 @@ Notice with the partial opacity data points to the right that you can identify o
 
 <div class="notes">
 
-Here is a comparison to fully opaque data marks to semi-transparent data marks. The effect can sometimes minimize the effect of outliers, but it does help reveal the structure of the main cluster of data. The carker gray colors represent areas with a moderate number of data values and the totally black colors represent areas with many more data values.
+Here is a comparison to fully opaque data marks to semi-transparent data marks. The effect can sometimes minimize the effect of outliers, but it does help reveal the structure of the 
 
 </div>
 
@@ -423,7 +528,7 @@ ggsave("../images/log-plot00.png", log_plot00, width=4, height=4)
 
 Often your data is crowded in the lower left corner of your graph. This is caused by skewness in your variables. A log transformation can often help in such a situation.
 
-Here's a picture of the log function. It is steep on the left (first derivative much larger than 1) and closer to flat on the right (first derivative much smaller than 1).
+Here's a picture of the log function. It is steep on the left and closer to flat on the right.
 
 </div>
 
@@ -676,27 +781,10 @@ If size represents a continuous variable, do you want the size to be proportion 
 ### Size and shape don't mix
 
 ```{r size-and-shape}
-p1 <- 103
-p2 <- 409
-co <- rep("black", dim(sa)[1])
-co[p1] <- "red"
-co[p2] <- "red"
-size_and_shape <- 
-  ggplot(sa, aes(Size, Price, size=Bedrooms, shape=factor(Fireplace))) + 
-  scale_shape_manual(values = c(0, 1)) +
-  geom_point(color=co)
-ggsave("../images/size-and-shape.png", size_and_shape, width=4, height=4)
+ggplot(sa, aes(Size, Price, size=Bedrooms, shape=factor(Fireplace))) + 
+  scale_shape_manual(values = c(4, 1)) +
+  geom_point()
 ```
-
-![Plot showing size as bedrooms and shape as fireplace](../images/size-and-shape.png)
-
-<div class="notes">
-
-It is difficult to compare the size of two marks when they have different shapes. Take this graph, for instance. Identify the house with the most bedrooms. Is it that red square near the middle bottom or the red circle near the top right?
-
-The size of the circle is clearly going to be the diameter, but do you measure the size of the square by one of its sides of by its diagonal? The size of the square is less than the diameter of the circle, but the diagonal is not.
-
-</div>
 
 ### Break #4
 
@@ -986,29 +1074,11 @@ A diverging gradient moves between two distinct colors and takes a side trip in 
 
 </div>
 
-### Always pair color with size or shape
-+ Avoids problems reproduction
-  + Poor quality
-  + Black and white
-+ Helps with patients having color blindness
-+ Especially important for discrete scales
-  
-<div class="notes">
-
-Color by itself is fragile. It looks nice on your computer screen, but sometimes the reproduction on a sheet of paper is not as good. It can really hurt you if you can only print on a black and white printer.
-
-If some of your viewers have color blindness, they may miss out on an important feature of your plot.
-
-The need to pair color with size or shape is especially important for categorical variables. The continuous variables will use a gradient that almost always has variations in luminance that is still discernable by people with color blindness. And the variations in luminance are not lost in a black and white reproduction.
-
-</div>
-
 ### Break #5
 
 + What have you learned
   + Issues with color
 + What's next
-  + Curse of dimensionality
   + Recommended books
 
 <div class="notes">
@@ -1017,72 +1087,6 @@ Just one more break. Are there any questions?
 
 </div>
 
-### The curse of dimensionality
-+ More dimensions = Slower comprehension
-+ Signs of too much information
-  + A big legend
-  + Too much similarity in colors or symbols
-  + Need for explanatory notes
-+ A line in the send 
-  + Never more than three dimensions
-  + Never more than two colors (or one gradient)
-  + Never more than two symbols
-
-<div class="notes">
-
-Today's datasets are highly mutlidimensional and that raises special challenges/ It's tempting to try to cram more and more information into a single plot, but this will hurt you more than it will help. A complex graph will slow your readers down and reduce their accuracy in understanding your message.
-
-The problem with most graphs is they tend to overwhelm your short term memory. You have to keep too much coding in the forefront of your thought processes, and some of it ends up slipping away, so you have to pause and refresh your short term memory.
-
-Some warning signs of a graph that is too complex are:
-
-A legend that takes up more than a small fraction of your graphing region.
-
-An overload of colors or symbols that forces you to make some of them very similar.
-
-A need for an elaborate explanation of how your graph works.
-
-Let me draw a line in the sand that you should never cross without the risk of losing your readers.
-
-Never try to fit more than three dimensions into a scatterplot. If you use both color and shape or both color and size, they have to be for the same variable.
-
-Don't use more than two colors unless it is a gradient for a continuous variable.
-
-Never use more than two shapes.
-
-Every step you take beyond this baseline forces you to pay a price. Quite honestly, the gain in information by adding more symbols or colors or dimensions is usually so small that you end up with a net loss.
-
-</div>
-
-### Recommended books
-
-![Book cover of Creating More Effective Graphs](../images/robbins-bookcover.jpg)
-
-<div class="notes">
-
-If you want to learn more about data visualization, start with this book. It is very applied and very easy to read.
-
-</div>
-
-### Recommended books
-
-![Book cover of Creating More Effective Graphs](../images/few-bookcover.jpg)
-
-<div class="notes">
-
-Stephen Few's book goes into things in more depth. That might be intimidating to a novice, but it makes it an excellent second book to read. Like the Robbins book, it is very applied.
-
-</div>
-
-### Recommended books
-
-![Book cover of Visual Revelations](../images/wainer-bookcover.jpg)
-
-<div class="notes">
-
-Your third book should be Visual Revelations by Howard Wainer. Dr. Wainer is a great story teller and you learn a lot from each story that he tells. This book takes a look at data visualization from many many years ago and points out lessons that you can learn from this. It's teaching through analogy.
-
-</div>
 
 ### Recommended books
 
@@ -1090,7 +1094,7 @@ Your third book should be Visual Revelations by Howard Wainer. Dr. Wainer is a g
 
 <div class="notes">
 
-Edward Tufte is a very interesting person. He looks beyond the world of graphics to more general principles of information design. That makes it much more high level. You are supposed to be inspired by the examples that Dr. Tufte presents. That's hard for a pure beginner, but once you have some of the more applied books under your belt, you will really appreciate the lessons that are offered in this book. It will help you develop an eye for what works and what doesn't work.
+Edward Tufte is a very interesting person. Very opinionated, and right most of the time. When his book suffers, it is from an attention to a guiding principle that is so rigid that it misses out on the times when there are exceptions to every principle. This is not the book to start with, but one that you should read after you've been doing visualization for a while. It will help you develop an eye for what works and what doesn't work.
 
 </div>
 
@@ -1100,7 +1104,7 @@ Edward Tufte is a very interesting person. He looks beyond the world of graphics
 
 <div class="notes">
 
-I learned more from this book than any other. It might be a bit dated today, but it helps you understand why a graph works from the underlying issues of the psychology of perception. This is also a good book to read if you want to see some of the pioneering changes that were made in data visualization just before the turn of the century.
+I learned more from this book than any other. It might be a bit dated today, but it helps you understand why a graph works from the underlying issues of the psychology of perception. This is also a good book to read if you want to see some of the pioneering changes that were made in data visualization just before the turn of the century. If you are just starting out in data visualization, this is not going to be your first book.
 
 </div>
 
@@ -1110,22 +1114,37 @@ I learned more from this book than any other. It might be a bit dated today, but
 
 <div class="notes">
 
-This book has had a tremendous impact on data visualizaiton software, but it took ten years because no one really understood what the book was trying to say. It is a very difficult read, full of theory. It is probably best for those who write software rather than those who use it. Still, even for someone who is a user and not a programmer, the principlies elucidated in this book will help you think about graphs in a more fundamental structure.
+This book has had a tremendous impact on data visualizaiton software, but it took ten years because no one really understood what the book was trying to say. It is a very difficult read, full of theory. It is probably best for those who write software rather than those who use it.
 
 </div>
 
-### Conclusion
-+ Scatterplots have five dimensions: X position, Y position, shape, size, and color.
-+ Mitigating overprinting: opem symbols, small symbols, opacity, log transformations, jittering.
-+ Don't mix open and closed symbols
-+ Don't mix size and shape
-+ Consider number or letter codes
-+ Don't use too many symbols or colors
-+ Don't cram too much into a single graph
+### Recommended books
+
+![Book cover of Visual Revelations](../images/wainer-bookcover.jpg)
 
 <div class="notes">
 
-Here are the general points that I covered.
+Howard Wainer is a great story teller and you learn a lot from each story that he tells. This book takes a look at data visualization from many many years ago and points out lessons that you can learn from this. It's sort of like teaching through analogy.
+
+</div>
+
+### Recommended books
+
+![Book cover of Creating More Effective Graphs](../images/robbins-bookcover.jpg)
+
+<div class="notes">
+
+This book is very applied and is an excellent starter book for anyone wanting to learn more about data visualization. I found it a bit simplistic in parts, but after having read so many other books, perhaps that is unavoidable.
+
+</div>
+
+### Recommended books
+
+![Book cover of Creating More Effective Graphs](../images/few-bookcover.jpg)
+
+<div class="notes">
+
+This is another very applied book. Both are equally good, but Robbins book seems a bit friendlier to me.
 
 </div>
 
