@@ -9,6 +9,39 @@ knitr::opts_chunk$set(echo=FALSE)
 suppressMessages(suppressWarnings(library(ggplot2)))
 ```
 
+### What is a scatterplot?
+
+```{r read, eval=FALSE}  
+# This chunk only needs to be read one time.
+fn <- "https://dasl.datadescription.com/download/data/3437"
+sa <- read.table(fn, header=TRUE, sep="\t", stringsAsFactors=FALSE)
+save(sa, file="../data/saratoga_housing.RData")
+write.csv(sa, "../data/saratoga_housing.csv", row.names=FALSE)
+```
+
+```{r simple-plot}
+load("../data/saratoga_housing.RData")
+library(ggplot2)
+plot_framework <- ggplot(
+  sa, aes(Size, Price), shape=factor(Fireplace)) +
+  expand_limits(x=c(0, 6), y=c(0, 1000)) +
+  xlab("House living space (thousands of square feet)") +
+  ylab("House price (thousands of dollars)")
+simple_plot <-  plot_framework + 
+  geom_point(size=1, shape=1)
+ggsave(
+  "../images/simple-plot.png", 
+  simple_plot, height=4, width=4)
+```
+
+![An scatterplot showing living space versus price](../images/simple-plot.png)
+
+<div class="notes">
+
+This shows a simple scatterplot. The x-axis represents the size of a house and the y-axis represents the price that the house sold for.
+
+</div>
+
 ### Synopsis
 
 + Definition of a scatterplot
@@ -43,6 +76,18 @@ There are five general recommendations I want to make about scatterplots.
 
 </div>
 
+### Your main homework assignment
++ What one thing will you do differently?
+  + Write down during the webinar
+  + Share at the end
+  + Not graded
+  
+<div class="notes">
+
+Normally, I do not assign work in these webinars, but I have a special favor to ask. As you are listening to this talk, you may discover something that makes you do things differently from now on. If so, jot that down so you can share it with me at the end of the class. If you didn't discover anything that you will do differently, that's okay also.
+
+</div>
+
 ### General principles
 
 + Two quantifiable criteria for an effective graph
@@ -65,7 +110,7 @@ This second point is particularly important. Your graph is not a puzzle that cha
 
 :::::: {.columns}
 ::: {.column}
-![Figure 1 from Simkin and Hatie 1987](../images/bar-and-pie-charts.png)
+![Figure 1 from Simkin and Hastie 1987](../images/bar-and-pie-charts.png)
 :::
 ::: {.column}
 + Simkin D, Hastie R. An Information-Processing Analysis of Graph Perception. Journal of the American Statistical Association 1987: 82(398); 454-465.
@@ -84,28 +129,8 @@ Read the paper for the full answer, but surprisingly, the pie chart turned out t
 
 </div>
 
-### Break #1
-
-+ What have you learned so far
-  + Two quantifiable measures: speed and accuracy
-+ What's coming next
-  + The five dimensions of a scatterplot
-  
-<div class="notes">
-
-Let's take a break here and see if there are any questions.
-
-</div>
-
 ### A five dimensional scatterplot
   
-```{r read, eval=FALSE}  
-fn <- "https://dasl.datadescription.com/download/data/3437"
-sa <- read.table(fn, header=TRUE, sep="\t", stringsAsFactors=FALSE)
-save(sa, file="../data/saratoga_housing.RData")
-write.csv(sa, "../data/saratoga_housing.csv", row.names=FALSE)
-```
-
 ```{r first-plot}
 load("../data/saratoga_housing.RData")
 library(ggplot2)
@@ -113,13 +138,13 @@ plot_framework <- ggplot(
   sa, aes(Size, Price, shape=factor(Fireplace), color=Baths, size=Bedrooms)) +
   theme(legend.position="none") + 
   expand_limits(x=c(0, 6), y=c(0, 1000)) +
-  xlab("Size of the house (thousands of square feet") +
-  ylab("Price of the house (thousands of dollars")
+  xlab("House living space (thousands of square feet)") +
+  ylab("House price (thousands of dollars)")
 kitchen_sink_plot <-  plot_framework + geom_point()
 ggsave("../images/kitchen-sink-plot.png", kitchen_sink_plot, height=4, width=4)
 ```
 
-![](../images/kitchen-sink-plot.png)
+![Plot of living space and price with three additional features](../images/kitchen-sink-plot.png)
 
 <div class="notes">
 
@@ -144,7 +169,7 @@ faded_plot <- plot_framework + geom_point(alpha=sa$highlight)
 ggsave("../images/faded-plot.png", faded_plot, width=4, height=4)
 ```
 
-![Plot of snowfall in Vermont with two marks highlighted](../images/faded-plot.png)
+![Plot of living space and price with two marks highlighted](../images/faded-plot.png)
 
 <div class="notes">
 
@@ -152,7 +177,7 @@ I want to highlight just two data marks in this graph to show what the five dime
 
 </div>
 
-### X dimension <- Square footage
+### X dimension <- Linving space
 
 ```{r}
 x_dimension <- faded_plot + 
@@ -161,7 +186,7 @@ x_dimension <- faded_plot +
 ggsave("../images/x-dimension.png", x_dimension, width=4, height=4)
 ```
 
-![Plot of snowfall in Vermont emphasizing X dimension](../images/x-dimension.png)
+![Plot of living space and price emphasizing X dimension](../images/x-dimension.png)
 
 <div class="notes">
 
@@ -178,7 +203,7 @@ y_dimension <- faded_plot +
 ggsave("../images/y-dimension.png", y_dimension, width=4, height=4)
 ```
 
-![Plot of snowfall in Vermont emphasizing Y dimension](../images/y-dimension.png)
+![Plot of living space and price emphasizing Y dimension](../images/y-dimension.png)
 
 <div class="notes">
 
@@ -196,7 +221,7 @@ size_dimension <- faded_plot +
 ggsave("../images/size-dimension.png", size_dimension, width=4, height=4)
 ```
 
-![Plot of snowfall in Vermont emphasizing size dimension](../images/size-dimension.png)
+![Plot of living space and price emphasizing size dimension](../images/size-dimension.png)
 
 <div class="notes">
 
@@ -214,7 +239,7 @@ shape_dimension <- faded_plot +
 ggsave("../images/shape-dimension.png", shape_dimension, width=4, height=4)
 ```
 
-![Plot of snowfall in Vermont emphasizing shape dimension](../images/shape-dimension.png)
+![Plot of living space and price emphasizing shape dimension](../images/shape-dimension.png)
 
 <div class="notes">
 
@@ -231,7 +256,7 @@ color_dimension <- faded_plot +
 ggsave("../images/color-dimension.png", color_dimension, width=4, height=4)
 ```
 
-![Plot of snowfall in Vermont emphasizing color dimension](../images/color-dimension.png)
+![Plot of living space and price emphasizing color dimension](../images/color-dimension.png)
 
 <div class="notes">
 
@@ -239,7 +264,29 @@ The color of the data mark indicats how many bathrooms a house has. The black da
 
 </div>
 
-### Break #2
+### Five dimensions of a scatterplot
+
+:::::: {.columns}
+::: {.column}
+![Plot of living space and price with three additional features](../images/kitchen-sink-plot.png)
+:::
+::: {.column}
++ Dimensions
+  + X <- Living space
+  + Y <- Price
+  + Size <- Bedrooms
+  + Shape <- Fireplace
+  + Color <- Baths
+:::
+::::::
+
+<div class="notes">
+
+Here's what open circles do to a scatter plot of living space versus price. It only helps a little, but you can start to see the difference between regions that have a moderate amount of data versus a much larger amount of data.
+
+</div>
+
+### Break #1
 
 + What have you learned
   + Five dimensions of a scatterplot (x, y, size, shape, and color)
@@ -253,6 +300,7 @@ Let me stop again and see if there are any questions.
 </div>
 
 ### Mitigating overprinting
++ Cluster of tightly packed points
 + Partial solutions
   + Open symbols
   + Small size
@@ -262,7 +310,9 @@ Let me stop again and see if there are any questions.
 
 <div class="notes">
 
-The biggest problem with many graphs is overprinting. So much data ends up producing a big black uninterpretable blob. There are several solutions that can help somewhat with overprinting.
+The biggest problem with many graphs is overprinting. So much data ends up producing a big black uninterpretable blob.  More often than not, it makes it harder for you to properly interpret a plot.
+
+There are several solutions that can help somewhat with overprinting.
 
 </div>
 
@@ -304,7 +354,7 @@ If you look at the figure to the left, it looks like it might be three or maybe 
 
 <div class="notes">
 
-Here's what open circles do to a scatter plot of square footage versus price. It only helps a little, but you can start to see the difference between regions that have a moderate amount of data versus a much larger amount of data.
+Here's what open circles do to a scatter plot of living space versus price. It only helps a little, but you can start to see the difference between regions that have a moderate amount of data versus a much larger amount of data.
 
 </div>
 
@@ -347,7 +397,7 @@ If you use smaller data marks, you will be able to separate out the four indvidu
 
 <div class="notes">
 
-In the square footage by price scatterplot, the smaller marks make it much easier to see where the individual data points are.
+In the living space by price scatterplot, the smaller marks make it much easier to see where the individual data points are.
 
 You can shrink this down to a single pixel, if you like. The plot looks like dust specks. Sometimes that ends up revealing a lot more of what is going on near the center of the data blob.
 
@@ -522,16 +572,19 @@ You could use a boxplot here, but jittering is also effective. Jittering is a ra
 
 </div>
 
-### Break #3
+### Break #2
 
 + What you have learned
   + Strategies for mitigating overprinting
 + What's coming next
   + Issues with shape and size
++ What one thing will you do differently?
   
 <div class="notes">
 
 Let's stop and see if there are any questions.
+
+Remember to think about what you might do differently. If you have something, write it down so we can share this at the end of the talk.
 
 </div>
 
@@ -698,16 +751,19 @@ The size of the circle is clearly going to be the diameter, but do you measure t
 
 </div>
 
-### Break #4
+### Break #3
 
 + What have you learned
   + Issues with shapes and sizes
 + What's coming next
   + Issues with color
++ What one thing will you do differently?
   
 <div class="notes">
 
 Let's stop again and see if there are any questions.
+
+If you have heard something that makes you want to do something differently, write it down, please.
 
 </div> 
 
@@ -1003,36 +1059,50 @@ The need to pair color with size or shape is especially important for categorica
 
 </div>
 
-### Break #5
+### Break #4
 
 + What have you learned
   + Issues with color
 + What's next
   + Curse of dimensionality
   + Recommended books
++ What one thing will you do differently?
 
 <div class="notes">
 
 Just one more break. Are there any questions?
 
+Also, please remember to write down anything that you've learned today that you will do differently in the future.
+
 </div>
 
 ### The curse of dimensionality
++ Univariate vs bivariate vs multivariate
++ Multivariate with k>3 is very hard.
 + More dimensions = Slower comprehension
+
+<div class="notes">
+
+In your basic Statistics class, you learned about univariate statistics like means and standard deviations. These are one dimensional statistics because they involve only one variable. Then you learned about bivariate statistics, statistics that involve two variables. Simple examples of bivariate statistics include correlation and simple linear regression. Then you moved to multivariate statistics. These were the most complicated statistics because they involved three or more variables. A simple example is multiple linear regression or discriminant analysis.
+
+You thought you were done. The cases 1 dimension, 2 dimension and 3 or more dimensions seems to about cover every possible case. But there is a difference between a 3 dimensional mutlivariate statistic (one that that uses 3 variables) and a 5, 50, or 500 dimensional multivariate statistic.
+
+The same is true for data visualization. There are one dimensional approaches such as histograms, two dimensional approaches such as scatterplots, and multidimensional approaches that use other features like size, shape, and color. A three dimensional relationship that you illustrate on a scatterplot is not too hard, but what do you do with 5, 50, or 500 variables?
+
+It's tempting to try to cram more and more information into a single plot, but this will hurt you more than it will help. A complex graph will slow your readers down and reduce their accuracy in understanding your message.
+
+The problem with most graphs is they tend to overwhelm your short term memory. You have to keep too much coding in the forefront of your thought processes, and some of it ends up slipping away, so you have to pause and refresh your short term memory.
+
+</div>
+
+### The curse of dimensionality
+
 + Signs of too much information
   + A big legend
   + Too much similarity in colors or symbols
   + Need for explanatory notes
-+ A line in the send 
-  + Never more than three dimensions
-  + Never more than two colors (or one gradient)
-  + Never more than two symbols
 
 <div class="notes">
-
-Today's datasets are highly mutlidimensional and that raises special challenges/ It's tempting to try to cram more and more information into a single plot, but this will hurt you more than it will help. A complex graph will slow your readers down and reduce their accuracy in understanding your message.
-
-The problem with most graphs is they tend to overwhelm your short term memory. You have to keep too much coding in the forefront of your thought processes, and some of it ends up slipping away, so you have to pause and refresh your short term memory.
 
 Some warning signs of a graph that is too complex are:
 
@@ -1041,6 +1111,121 @@ A legend that takes up more than a small fraction of your graphing region.
 An overload of colors or symbols that forces you to make some of them very similar.
 
 A need for an elaborate explanation of how your graph works.
+
+</div>
+
+### The curse of dimensionality
++ Solutions that don't solve the problem
+  + Three dimensional plots
+  + Scatterplot matrices
+  + Panels
+  
+<div class="notes">
+
+There have been many attempts 
+
+</div>
+
+### Three dimensional plots
+
+```{r three-dimensional-plot}
+library(scatterplot3d)
+png("../images/three-dimensional.png",
+  width=400, height=400)
+scatterplot3d(
+  sa$Size, 
+  sa$Price, 
+  sa$Bedrooms,
+  xlab="Linving space",
+  ylab="Price in thousands",
+  zlab="Number of bedrooms")
+quiet <- dev.off()
+```
+
+![Three dimensional scatterplot of price, size, and bedrooms](../images/three-dimensional.png)
+
+<div class="notes">
+
+This is pretty much the default option for a three dimensional scatterplot in R. You can spend forever changing the viewpoint angle, but it is very very hard to do this well.
+
+The main problem with a three dimensional scatterplot is that when you display it on a two dimensional computer screen, there are an infinite number of data points in three dimensions that correspond to a single pixel on your two dimensional screen.
+
+</div>
+
+### The curse of dimensionality
+
+![Illustration of Penrose stairs](../images/penrose-stairs.png)
+
+<div class="notes">
+
+If that weren't bad enough, the three dimensional perspective distorts distance and direction. This simple illustration was not an M.C. Escher creation, but one that Escher used for much more elaborate artistry. The simple staircase shown here was developed by Roger Penrose.
+
+Notice that three steps on one side of the stairs equals five steps on the opposite side. Also notice that the stairs seem to climb continuously.
+
+</div>
+
+### Scatterplot matrices
+
+```{r scatterplot matrices}
+png("../images/scatterplot-matrix.png",
+  width=400, height=400)
+pairs(
+  ~ Size + Price + Bedrooms + Baths,   data=sa)
+quiet <- dev.off()
+```
+
+![Scatterplot matrix for living space, price, bedrooms, and baths](../images/scatterplot-matrix.png)
+
+<div class="notes">
+
+This is a scatterplot matrix. You get to see all six of the possible pairwise scatterplots involving the four variables (living space, price, bedrooms, and bathrooms).
+
+You lose a lot of resolution when you shrink each plot so much, and it's a bad tradeoff, more often than not.
+
+</div>
+
+### The curse of dimensionality
+
+```{r panel}
+panel_plot <- ggplot(sa, aes(Size, Price)) +
+  geom_point() +
+  facet_wrap(vars(Bedrooms))
+ggsave(
+  "../images/panel-plot.png",
+  panel_plot, width=4, height=4)
+```
+
+![Panel plot showing living space by price for different bedroom numbers](../images/panel-plot.png)
+
+<div class="notes">
+
+There are also options for panels or facets where you plot subsets of the data in different graphs that are laid out in a rectangular grid.
+
+This has the exact same problem as the scatterplot matrix. What you gain by adding a variable is lost by the smaller size that you have to endure.
+
+</div>
+
+### The curse of dimensionality
+
+![Image from Hans Rosling YouTube video](../images/hans-rosling.png)
+
+<div class="notes">
+
+Animation offers a way to add another dimension. It looks impressive, but you have to spend too much time with the animation. 
+
+There are visualization tools like slider bars and effects that occur when your mouse hovers over a data point.
+
+These can sometimes help, but more often than not, they end up being cheap gimmicks that make you look impressive (wow, look at those programming skills), but which often add very little information.
+
+</div>
+
+### The curse of dimensionality
++ A line in the sand 
+  + Never more than three dimensions
+  + Never more than two colors (or one gradient)
+  + Never more than two symbols
+
+<div class="notes">
 
 Let me draw a line in the sand that you should never cross without the risk of losing your readers.
 
@@ -1114,18 +1299,33 @@ This book has had a tremendous impact on data visualizaiton software, but it too
 
 </div>
 
+### Your main homework assignment
++ What one thing will you do differently?
+  + Share it in the chat box
+  + Totally optional
+  
+<div class="notes">
+
+Remember that I asked you about this earlier and reminded you during each break. If you have discovered something that makes you do things differently from now on, I'd love it if you could share that in the chat box. It's totally optional, of course.
+
+</div>
+
+
+
 ### Conclusion
-+ Scatterplots have five dimensions: X position, Y position, shape, size, and color.
-+ Mitigating overprinting: opem symbols, small symbols, opacity, log transformations, jittering.
-+ Don't mix open and closed symbols
-+ Don't mix size and shape
-+ Consider number or letter codes
-+ Don't use too many symbols or colors
-+ Don't cram too much into a single graph
++ Mitigating overprinting
++ Some things don't mix
++ Revise, revise, revise
 
 <div class="notes">
 
-Here are the general points that I covered.
+Here are the general points that I covered. 
+
+Strategies for mitigating overprinting include using open symbols, smaller symbols, opacity, log transformation, and jittering.
+
+You have options to modify size, shape, and color, but some of these don't mix well. Open symbols disappear behind closed symbols, changing both size and shape is confusing, as are too many shapes or colors.
+
+Finally, never accept the default options that come with a graph. Revise your graphs as often as you rewrite your text.
 
 </div>
 
