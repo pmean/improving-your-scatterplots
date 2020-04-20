@@ -25,8 +25,8 @@ library(ggplot2)
 simple_framework <- ggplot(
   sa, aes(Size, Price)) +
   expand_limits(x=c(0, 6), y=c(0, 1000)) +
-  xlab("House living space (thousands of square feet)") +
-  ylab("House price (thousands of dollars)")
+  xlab("Living space (thousands of square feet)") +
+  ylab("Price (thousands of dollars)")
 simple_plot <-  simple_framework + 
   geom_point(size=1, shape=1)
 ggsave(
@@ -134,12 +134,14 @@ Read the paper for the full answer, but surprisingly, the pie chart turned out t
 ```{r first-plot}
 load("../data/saratoga_housing.RData")
 library(ggplot2)
+sb <- sa
+sb$Fireplace <- factor(sa$Fireplace)
 plot_framework <- ggplot(
-  sa, aes(Size, Price, shape=factor(Fireplace), color=Baths, size=Bedrooms)) +
+  sb, aes(Size, Price, shape=Fireplace, color=Baths, size=Bedrooms)) +
   theme(legend.position="none") + 
   expand_limits(x=c(0, 6), y=c(0, 1000)) +
-  xlab("House living space (thousands of square feet)") +
-  ylab("House price (thousands of dollars)")
+  xlab("Living space (thousands of square feet)") +
+  ylab("Price (thousands of dollars)")
 kitchen_sink_plot <-  plot_framework + geom_point()
 ggsave("../images/kitchen-sink-plot.png", kitchen_sink_plot, height=4, width=4)
 ```
@@ -627,18 +629,17 @@ Remember to think about what you might do differently. If you have something, wr
 ### Problem with open and closed shapes together
 
 ```{r open-and-closed}
-Fireplace <- factor(sa$Fireplace)
 open_closed01 <- 
-  ggplot(sa, aes(Size, Price, shape=factor(Fireplace))) + 
-  xlab("House living space (thousands of square feet)") +
-  ylab("House price (thousands of dollars)") +
+  ggplot(sb, aes(Size, Price, shape=Fireplace)) + 
+  xlab("Living space (thousands of square feet)") +
+  ylab("Price (thousands of dollars)") +
   scale_shape_manual(values = c(1, 16)) +
   geom_point()
 ggsave("../images/open-closed01.png", open_closed01, width=4, height=4)
 open_closed02 <- 
-  ggplot(sa, aes(Size, Price, shape=factor(Fireplace))) + 
-  xlab("House living space (thousands of square feet)") +
-  ylab("House price (thousands of dollars)") +
+  ggplot(sb, aes(Size, Price, shape=Fireplace)) + 
+  xlab("Living space (thousands of square feet)") +
+  ylab("Price (thousands of dollars)") +
   scale_shape_manual(values = c(16, 1)) +
   geom_point()
 ggsave("../images/open-closed02.png", open_closed02, width=4, height=4)
@@ -663,10 +664,13 @@ In a fight between open and closed symbols, the closed symbols always win. Notic
 ### Don't use too many shapes
 
 ```{r too-many-symbols}
+sb <- sa
+sb$Bedrooms <- factor(sa$Bedrooms)
+
 too_many_symbols <- 
-  ggplot(sa, aes(Size, Price, shape=factor(Bedrooms))) + 
-  xlab("House living space (thousands of square feet)") +
-  ylab("House price (thousands of dollars)") +
+  ggplot(sb, aes(Size, Price, shape=Bedrooms)) + 
+  xlab("Living space (thousands of square feet)") +
+  ylab("Price (thousands of dollars)") +
   scale_shape_manual(values = 0:6) +
   geom_point()
 ggsave("../images/too-many-symbols.png", too_many_symbols, width=4, height=4)
@@ -688,8 +692,8 @@ The second problem is that number of bedrooms is not categorical. You want the g
 sa$FourPlusBedrooms <- ifelse(sa$Bedrooms>=4, "4+ BR", "1-3 BR")
 two_symbols <- 
   ggplot(sa, aes(Size, Price, shape=FourPlusBedrooms)) + 
-  xlab("House living space (thousands of square feet)") +
-  ylab("House price (thousands of dollars)") +
+  xlab("Living space (thousands of square feet)") +
+  ylab("Price (thousands of dollars)") +
   geom_point() +
   scale_shape_manual(values = c(4, 1))
 ggsave("../images/two-symbols.png", two_symbols, width=4, height=4)
@@ -709,8 +713,8 @@ Here is a better plot. You lose a bit of information by using only two shapes, b
 ```{r symbol-text01}
 number_codes <- 
   ggplot(sa, aes(Size, Price, label=Bedrooms)) + 
-  xlab("House living space (thousands of square feet)") +
-  ylab("House price (thousands of dollars)") +
+  xlab("Living space (thousands of square feet)") +
+  ylab("Price (thousands of dollars)") +
   geom_text()
 ggsave("../images/number-codes.png", number_codes, width=4, height=4)
 ```
@@ -728,8 +732,8 @@ Sometimes a simple bit of text works better than symbols. In most software syste
 ```{r symbol-text02}
 sa$Fireplace_code <- ifelse(sa$Fireplace==1, "Y", "N")
 letter_codes <- ggplot(sa, aes(Size, Price, label=Fireplace_code)) + 
-  xlab("House living space (thousands of square feet)") +
-  ylab("House price (thousands of dollars)") +
+  xlab("Living space (thousands of square feet)") +
+  ylab("Price (thousands of dollars)") +
   geom_text()
 ggsave("../images/letter-codes.png", letter_codes, width=4, height=4)
 ```
@@ -749,8 +753,8 @@ Other examples might be M for male and F for female, T for treatment and C for c
 ```{r size-bedrooms}
 bubble_chart <- 
   ggplot(sa, aes(Size, Price, size=Bedrooms)) + 
-  xlab("House living space (thousands of square feet)") +
-  ylab("House price (thousands of dollars)") +
+  xlab("Living space (thousands of square feet)") +
+  ylab("Price (thousands of dollars)") +
   geom_point(shape=1)
 ggsave("../images/bubble-chart.png", width=4, height=4)
 ```
@@ -774,8 +778,8 @@ sa$Style <- 1 +
   (sa$Acres > acre_splits[3])
 size_categorical <- 
   ggplot(sa, aes(Size, Price, size=Style)) + 
-  xlab("House living space (thousands of square feet)") +
-  ylab("House price (thousands of dollars)") +
+  xlab("Living space (thousands of square feet)") +
+  ylab("Price (thousands of dollars)") +
   geom_point(shape=1)
 ggsave("../images/size_categorical.png", width=4, height=4)
 ```
@@ -788,39 +792,30 @@ ggsave("../images/size_categorical.png", width=4, height=4)
 
 </div>
 
-### Size: area versus diameter?
+### Size: proportional to area or radius?
 
 ```{r area-versus-diameter}
+size_values <- 
+  data.frame(
+    x=rep(1:9, 3),
+    y=rep(1:3, each=9),
+    z=rep(c(rep("\U25EF", 18), 1:9)),
+    s=c(3*(1:9), 3*sqrt(1:9), rep(5, 9))
+  )
 area_chart <- 
-  ggplot(sa, aes(Size, Price)) + 
-  xlab("House living space (thousands of square feet)") +
-  ylab("House price (thousands of dollars)") +
-  geom_point(shape=0, size=sa$Bedrooms) +
-  theme(legend.position="none")
+  ggplot(size_values, aes(x, y, label=z)) + 
+  geom_text(size=size_values$s) +
+  expand_limits(y=c(0, 4)) +
+  expand_limits(x=c(-1, 10)) +
+  geom_text(x=0, y=1, label="Radius", size=5) +
+  geom_text(x=0, y=2, label="Area", size=5) +
+  theme_void()
 ggsave(
   "../images/area-chart.png", 
-  area_chart, width=4, height=4)
-tmp <- sa$Bedrooms^2/4
-radius_chart <- 
-  ggplot(sa, aes(Size, Price)) + 
-  xlab("House living space (thousands of square feet)") +
-  ylab("House price (thousands of dollars)") +
-  geom_point(shape=024/34, size=tmp) +
-  theme(legend.position="none")
-ggsave(
-  "../images/radius-chart.png", 
-  radius_chart, width=4, height=4)
+  area_chart, width=8, height=4)
 ```
 
-:::::: {.columns}
-::: {.column}
 ![](../images/area-chart.png)
-:::
-::: {.column}
-![](../images/radius-chart.png)
-:::
-::::::
-
 
 <div class="notes">
 
@@ -842,14 +837,15 @@ co[p1] <- "red"
 co[p2] <- "red"
 size_and_shape <- 
   ggplot(sa, aes(Size, Price, size=Bedrooms, shape=factor(Fireplace))) + 
-  xlab("House living space (thousands of square feet)") +
-  ylab("House price (thousands of dollars)") +
+  xlab("Living space (thousands of square feet)") +
+  ylab("Price (thousands of dollars)") +
   scale_shape_manual(values = c(0, 1)) +
+  theme(legend.position="none") +
   geom_point(color=co)
 ggsave("../images/size-and-shape.png", size_and_shape, width=4, height=4)
 ```
 
-![Plot showing size as bedrooms and shape as fireplace](../images/size-and-shape.png)
+![Square=no fireplace, Circle=Fireplace](../images/size-and-shape.png)
 
 <div class="notes">
 
@@ -1118,6 +1114,22 @@ This is a nice set of colors. Each color is distinct from each other color and t
 
 </div>
 
+### Discrete colors
+
+```{r discrete-colors-plot}
+sb <- sa
+sb$Style <- factor(sa$Style)
+discrete_colors <- 
+  ggplot(sb, aes(Size, Price, color=Style)) + 
+  xlab("Living space (thousands of square feet)") +
+  ylab("Price (thousands of dollars)") +
+  geom_point(shape=1) + 
+  scale_color_brewer(palette="Dark2")
+ggsave("../images/discrete-colors.png", width=4, height=4)
+```
+
+![House style: 1=A-frame, 2=Ranch, 3=Split-level, 4=Victorian](../images/discrete-colors.png)
+
 ### Simple gradient
 
 ```{r simple-gradient, eval=FALSE}
@@ -1136,6 +1148,35 @@ Depending on the nature of your plot, one end of the gradient will be emphasized
 
 </div>
 
+### Simple gradient
+
+```{r green-gradient}
+sb$Bedrooms <- factor(sa$Bedrooms)
+green_gradient <- 
+  ggplot(sb, aes(Size, Price, color=Bedrooms)) + 
+  xlab("Living space (thousands of square feet)") +
+  ylab("Price (thousands of dollars)") +
+  geom_point(shape=1) + 
+  scale_color_brewer(palette="Greens")
+ggsave("../images/green-gradient.png", width=4, height=4)
+```
+
+![](../images/green-gradient.png)
+
+### Simple gradient
+
+```{r green-gradient-reverse}
+green_gradient_reverse <- 
+  ggplot(sb, aes(Size, Price, color=Bedrooms)) + 
+  xlab("Living space (thousands of square feet)") +
+  ylab("Price (thousands of dollars)") +
+  geom_point(shape=1) + 
+  scale_color_brewer(palette="Greens", direction=-1)
+ggsave("../images/green-gradient-reverse.png", width=4, height=4)
+```
+
+![](../images/green-gradient-reverse.png)
+
 ### Diverging gradient
 
 ```{r diverging-gradient, eval=FALSE}
@@ -1150,11 +1191,25 @@ A diverging gradient moves between two distinct colors and takes a side trip in 
 
 </div>
 
-### Always pair color with size or shape
+### Diverging gradient
+
+```{r diverging-gradient-example}
+diverging_gradient_example <- 
+  ggplot(sb, aes(Size, Price, color=Bedrooms)) + 
+  xlab("Living space (thousands of square feet)") +
+  ylab("Price (thousands of dollars)") +
+  geom_point(shape=1) + 
+  scale_color_brewer(palette="RdYlGn")
+ggsave("../images/diverging-gradient-example.png", width=4, height=4)
+```
+
+![](../images/diverging-gradient-example.png)
+
+### Pairing color
 + Avoids problems reproduction
   + Poor quality
   + Black and white
-+ Helps with patients having color blindness
++ Helps those with color blindness
 + Especially important for discrete scales
   
 <div class="notes">
@@ -1166,6 +1221,25 @@ If some of your viewers have color blindness, they may miss out on an important 
 The need to pair color with size or shape is especially important for categorical variables. The continuous variables will use a gradient that almost always has variations in luminance that is still discernable by people with color blindness. And the variations in luminance are not lost in a black and white reproduction.
 
 </div>
+
+### Pairing color
+
+```{r discrete-letters}
+sa$Style_letters <- "A"
+sa$Style_letters[sa$Style==2] <- "R"
+sa$Style_letters[sa$Style==3] <- "S"
+sa$Style_letters[sa$Style==4] <- "V"
+discrete_letters <- 
+  ggplot(sa, aes(Size, Price, color=Style_letters, label=Style_letters)) + 
+  xlab("Living space (thousands of square feet)") +
+  ylab("Price (thousands of dollars)") +
+  geom_text() + 
+  theme(legend.position="none") +
+  scale_color_brewer(palette="Dark2")
+ggsave("../images/discrete-letters.png", width=4, height=4)
+```
+
+![House style: A=A-frame, R=Ranch, S=Split-level, V=Victorian](../images/discrete-letters.png)
 
 ### Break #4
 
@@ -1423,6 +1497,7 @@ Remember that I asked you about this earlier and reminded you during each break.
 ### Conclusion
 + Mitigating overprinting
 + Some things don't mix
++ Don't jam too much in
 + Revise, revise, revise
 
 <div class="notes">

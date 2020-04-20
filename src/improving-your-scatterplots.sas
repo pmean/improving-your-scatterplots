@@ -17,6 +17,11 @@ proc import
   getnames=yes;
 run;
 
+data improve.saratoga;
+  set improve.saratoga;
+  label Size="Living space";
+run;
+
 ods listing gpath='/folders/myfolders/improving-your-scatterplots/images/';
 
 ods graphics / imagename="scatter-filled" imagefmt=png reset=index;
