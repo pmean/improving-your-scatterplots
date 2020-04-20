@@ -76,6 +76,19 @@ proc sgplot
   yaxis type=log logbase=2 logstyle=logexpand;
 run;
 
+ods graphics / imagename="scatter-combination" imagefmt=png reset=index;
+proc sgplot
+    data=improve.saratoga;
+  scatter x=Size y=Price / 
+    transparency=0
+    markerattrs=(
+      symbol=Circle 
+      size=5
+    );
+  xaxis type=log logbase=2 logstyle=logexpand;
+  yaxis type=log logbase=2 logstyle=logexpand;
+run;
+
 ods graphics / imagename="scatter-no-jitter" imagefmt=png reset=index;
 proc sgplot
     data=improve.saratoga;

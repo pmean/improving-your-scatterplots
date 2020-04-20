@@ -22,12 +22,12 @@ write.csv(sa, "../data/saratoga_housing.csv", row.names=FALSE)
 ```{r simple-plot}
 load("../data/saratoga_housing.RData")
 library(ggplot2)
-plot_framework <- ggplot(
-  sa, aes(Size, Price), shape=factor(Fireplace)) +
+simple_framework <- ggplot(
+  sa, aes(Size, Price)) +
   expand_limits(x=c(0, 6), y=c(0, 1000)) +
   xlab("House living space (thousands of square feet)") +
   ylab("House price (thousands of dollars)")
-simple_plot <-  plot_framework + 
+simple_plot <-  simple_framework + 
   geom_point(size=1, shape=1)
 ggsave(
   "../images/simple-plot.png", 
@@ -552,6 +552,23 @@ Notice how the plot on the log scale tends to fill up the plotting area a bit mo
 
 </div>
 
+### Mitigating overprinting: Jittering
+
+:::::: {.columns}
+::: {.column}
+![Plot of bedrooms and price without jittering](../images/scatter-no-jitter.png)
+:::
+::: {.column}
+:::
+::::::
+
+<div class="notes">
+
+I have to switch to a different set of variables to better illustrate jittering. The Y axis is still price, but the X axis is now the number of bedrooms, and most of the data values are now squished together into vertical lines.
+
+You could use a boxplot here, but jittering is also effective. Jittering is a random shift of datapoints to the left or right (sometimes up and down as well) to help spread the data out a little bit.
+
+</div>
 
 ### Mitigating overprinting: Jittering
 
@@ -569,6 +586,25 @@ Notice how the plot on the log scale tends to fill up the plotting area a bit mo
 I have to switch to a different set of variables to better illustrate jittering. The Y axis is still price, but the X axis is now the number of bedrooms, and most of the data values are now squished together into vertical lines.
 
 You could use a boxplot here, but jittering is also effective. Jittering is a random shift of datapoints to the left or right (sometimes up and down as well) to help spread the data out a little bit.
+
+</div>
+
+### Mitigating overprinting: Combination
+
+:::::: {.columns}
+::: {.column}
+![Original scatterplot](../images/scatter-filled.png)
+:::
+::: {.column}
+![Scatterplot with small open circles on a log scale](../images/scatter-combination.png)
+:::
+::::::
+
+<div class="notes">
+
+Here's a plot that combines three of these partial solutions: size, open circles, and a log scale.
+
+I'm not sure if this would be my final plot, but I think it is a big improvement over the original plot on the left.
 
 </div>
 
@@ -591,13 +627,18 @@ Remember to think about what you might do differently. If you have something, wr
 ### Problem with open and closed shapes together
 
 ```{r open-and-closed}
+Fireplace <- factor(sa$Fireplace)
 open_closed01 <- 
   ggplot(sa, aes(Size, Price, shape=factor(Fireplace))) + 
+  xlab("House living space (thousands of square feet)") +
+  ylab("House price (thousands of dollars)") +
   scale_shape_manual(values = c(1, 16)) +
   geom_point()
 ggsave("../images/open-closed01.png", open_closed01, width=4, height=4)
 open_closed02 <- 
   ggplot(sa, aes(Size, Price, shape=factor(Fireplace))) + 
+  xlab("House living space (thousands of square feet)") +
+  ylab("House price (thousands of dollars)") +
   scale_shape_manual(values = c(16, 1)) +
   geom_point()
 ggsave("../images/open-closed02.png", open_closed02, width=4, height=4)
@@ -605,10 +646,10 @@ ggsave("../images/open-closed02.png", open_closed02, width=4, height=4)
 
 :::::: {.columns}
 ::: {.column}
-![Plot showing open and closed circles](../images/open-closed01.png)
+![Plot showing Fireplace=closed circles](../images/open-closed01.png)
 :::
 ::: {.column}
-![Plot showing closed and open circles](../images/open-closed02.png)
+![Plot showing No Fireplace=closed circles](../images/open-closed02.png)
 :::
 ::::::
 
@@ -624,6 +665,8 @@ In a fight between open and closed symbols, the closed symbols always win. Notic
 ```{r too-many-symbols}
 too_many_symbols <- 
   ggplot(sa, aes(Size, Price, shape=factor(Bedrooms))) + 
+  xlab("House living space (thousands of square feet)") +
+  ylab("House price (thousands of dollars)") +
   scale_shape_manual(values = 0:6) +
   geom_point()
 ggsave("../images/too-many-symbols.png", too_many_symbols, width=4, height=4)
@@ -645,6 +688,8 @@ The second problem is that number of bedrooms is not categorical. You want the g
 sa$FourPlusBedrooms <- ifelse(sa$Bedrooms>=4, "4+ BR", "1-3 BR")
 two_symbols <- 
   ggplot(sa, aes(Size, Price, shape=FourPlusBedrooms)) + 
+  xlab("House living space (thousands of square feet)") +
+  ylab("House price (thousands of dollars)") +
   geom_point() +
   scale_shape_manual(values = c(4, 1))
 ggsave("../images/two-symbols.png", two_symbols, width=4, height=4)
@@ -664,6 +709,8 @@ Here is a better plot. You lose a bit of information by using only two shapes, b
 ```{r symbol-text01}
 number_codes <- 
   ggplot(sa, aes(Size, Price, label=Bedrooms)) + 
+  xlab("House living space (thousands of square feet)") +
+  ylab("House price (thousands of dollars)") +
   geom_text()
 ggsave("../images/number-codes.png", number_codes, width=4, height=4)
 ```
@@ -681,6 +728,8 @@ Sometimes a simple bit of text works better than symbols. In most software syste
 ```{r symbol-text02}
 sa$Fireplace_code <- ifelse(sa$Fireplace==1, "Y", "N")
 letter_codes <- ggplot(sa, aes(Size, Price, label=Fireplace_code)) + 
+  xlab("House living space (thousands of square feet)") +
+  ylab("House price (thousands of dollars)") +
   geom_text()
 ggsave("../images/letter-codes.png", letter_codes, width=4, height=4)
 ```
@@ -700,6 +749,8 @@ Other examples might be M for male and F for female, T for treatment and C for c
 ```{r size-bedrooms}
 bubble_chart <- 
   ggplot(sa, aes(Size, Price, size=Bedrooms)) + 
+  xlab("House living space (thousands of square feet)") +
+  ylab("House price (thousands of dollars)") +
   geom_point(shape=1)
 ggsave("../images/bubble-chart.png", width=4, height=4)
 ```
@@ -712,13 +763,68 @@ This plot shows how the size of the mark can indicate a third variable. In this 
 
 </div>
 
-### Size
-+ Never for a categorical variable
-+ Propotional to
-  + Diameter?
-  + Area?
+### Never use size for categorical data
+
+```{r size-categorical}
+acre_splits <- quantile(sa$Acres, probs=c(0.25, 0.5, 0.75))
+
+sa$Style <- 1 + 
+  (sa$Acres > acre_splits[1]) +
+  (sa$Acres > acre_splits[2]) +
+  (sa$Acres > acre_splits[3])
+size_categorical <- 
+  ggplot(sa, aes(Size, Price, size=Style)) + 
+  xlab("House living space (thousands of square feet)") +
+  ylab("House price (thousands of dollars)") +
+  geom_point(shape=1)
+ggsave("../images/size_categorical.png", width=4, height=4)
+```
+
+![House style: 1=A-frame, 2=Ranch, 3=Split-level, 4=Victorian](../images/size_categorical.png)
 
 <div class="notes">
+
+
+
+</div>
+
+### Size: area versus diameter?
+
+```{r area-versus-diameter}
+area_chart <- 
+  ggplot(sa, aes(Size, Price)) + 
+  xlab("House living space (thousands of square feet)") +
+  ylab("House price (thousands of dollars)") +
+  geom_point(shape=0, size=sa$Bedrooms) +
+  theme(legend.position="none")
+ggsave(
+  "../images/area-chart.png", 
+  area_chart, width=4, height=4)
+tmp <- sa$Bedrooms^2/4
+radius_chart <- 
+  ggplot(sa, aes(Size, Price)) + 
+  xlab("House living space (thousands of square feet)") +
+  ylab("House price (thousands of dollars)") +
+  geom_point(shape=024/34, size=tmp) +
+  theme(legend.position="none")
+ggsave(
+  "../images/radius-chart.png", 
+  radius_chart, width=4, height=4)
+```
+
+:::::: {.columns}
+::: {.column}
+![](../images/area-chart.png)
+:::
+::: {.column}
+![](../images/radius-chart.png)
+:::
+::::::
+
+
+<div class="notes">
+
+Example: Ranch, Split-level, Two-story, Victorian
 
 Never use size for a categorical variable. You want all the categories to be equally distinguishable, and categories given the middle sizes end up looking too much alike.
 
@@ -736,6 +842,8 @@ co[p1] <- "red"
 co[p2] <- "red"
 size_and_shape <- 
   ggplot(sa, aes(Size, Price, size=Bedrooms, shape=factor(Fireplace))) + 
+  xlab("House living space (thousands of square feet)") +
+  ylab("House price (thousands of dollars)") +
   scale_shape_manual(values = c(0, 1)) +
   geom_point(color=co)
 ggsave("../images/size-and-shape.png", size_and_shape, width=4, height=4)
