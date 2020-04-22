@@ -788,7 +788,11 @@ ggsave("../images/size_categorical.png", width=4, height=4)
 
 <div class="notes">
 
+Never use size for a categorical variable. You'll be able to make easy categorical distinctions on the categories that just happen to have the most extreme values, but the choice of values for a categorical variable are arbitrary.
 
+You want all categories to be well distinguished from the other values, but with size, the values in the middle are difficult to distinguish.
+
+Here, you can easily tell the difference between an A-frame style (size=1) and a Victorian style (size=4). But it is a bit harder to distinguish between a Ranch style (size=2) and a Split-level (size=3).
 
 </div>
 
@@ -1101,12 +1105,12 @@ When you use a bit of restraint and only show two colors, you make the process o
 
 ### Discrete colors
 
-```{r discrete-colors, eval=FALSE}
+```{r discrete-colors, eval=TRUE}
 library(RColorBrewer)
 display.brewer.pal(9, "Dark2")
 ```
 
-![Discrete color choices from RColorBrewer](../images/discrete-colors.png)
+![Discrete color choices from RColorBrewer](../images/discrete-palette.png)
 
 <div class="notes">
 
@@ -1129,6 +1133,12 @@ ggsave("../images/discrete-colors.png", width=4, height=4)
 ```
 
 ![House style: 1=A-frame, 2=Ranch, 3=Split-level, 4=Victorian](../images/discrete-colors.png)
+
+<div class="notes">
+
+This plot shows what the first four discrete colors look like when they are representing the four house styles.
+
+</div>
 
 ### Simple gradient
 
@@ -1163,6 +1173,12 @@ ggsave("../images/green-gradient.png", width=4, height=4)
 
 ![](../images/green-gradient.png)
 
+<div class="notes">
+
+This shows what the green gradient looks like when applied to the number of bedrooms. Notice that the light green colors tend to fade into the background. This means that the low end of the scale is de-emphasized, and you tend to pay greater attention to those houses with a lot of bedrooms.
+
+</div>
+
 ### Simple gradient
 
 ```{r green-gradient-reverse}
@@ -1176,6 +1192,14 @@ ggsave("../images/green-gradient-reverse.png", width=4, height=4)
 ```
 
 ![](../images/green-gradient-reverse.png)
+
+<div class="notes">
+
+You can reverse this, so that the darker colors are associated with the smaller number of bedrooms.
+
+That's a feature of most simple gradients. They tend to emphasize data at the upper extreme or data at the lower extreme. There are times when you definitely want this. In a plot using rates of a particular disease or illness, for example, you would want to focus on areas where the rates are unusually high. In a plot using signal strength for cell phone connections, you might want the opposite. You'd emphasize low values so that you would know where you needed extra cell phone towers.
+
+</div>
 
 ### Diverging gradient
 
@@ -1204,6 +1228,12 @@ ggsave("../images/diverging-gradient-example.png", width=4, height=4)
 ```
 
 ![](../images/diverging-gradient-example.png)
+
+<div class="notes">
+
+Here is a plot using a diverging gradient to display the number of bedrooms. The houses with only one or two bedrooms are on the orange/red end of the gradient, and the houses with 5 or 7 bedrooms (there aren't that many of them) are on the green end of the gradient.
+
+</div>
 
 ### Pairing color
 + Avoids problems reproduction
@@ -1240,6 +1270,12 @@ ggsave("../images/discrete-letters.png", width=4, height=4)
 ```
 
 ![House style: A=A-frame, R=Ranch, S=Split-level, V=Victorian](../images/discrete-letters.png)
+
+<div class="notes">
+
+This graph combines the letters A, R, S, and V with the four discrete colors. It makes it a bit easier to pick out the particular housing styles. A-frames, for example, tend to have less living space. Victorian houses, in contrast, tend to have more living space.
+
+</div>
 
 ### Break #4
 
@@ -1301,6 +1337,7 @@ A need for an elaborate explanation of how your graph works.
   + Three dimensional plots
   + Scatterplot matrices
   + Panels
+  + Animation
   
 <div class="notes">
 
@@ -1428,6 +1465,8 @@ Every step you take beyond this baseline forces you to pay a price. Quite honest
 <div class="notes">
 
 If you want to learn more about data visualization, start with this book. It is very applied and very easy to read.
+
+Unfortunately, it may be out of print.
 
 </div>
 
